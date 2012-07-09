@@ -15,7 +15,13 @@ describe "Users" do
       it "should not create user" do
         expect { click_button submit }.not_to change(User, :count)
       end
+      describe "after submission" do
+        before { click_button submit }
+        it { should have_selector('title', text:'ユーザ登録') }
+        it { should have_content('登録エラー') }
+      end
     end
+    
     
     describe "valid information" do
       before do
@@ -26,6 +32,11 @@ describe "Users" do
       end
       it "should create user" do
         expect { click_button submit }.to change(User, :count).by(1)
+      end
+      describe "after submission" do
+        before { click_button submit }
+        it { should have_selector('title', text:"Example User") }
+        it { should have_content('登録完了！') }
       end
     end
 
