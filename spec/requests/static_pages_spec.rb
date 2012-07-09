@@ -1,22 +1,31 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe "StaticPages" do
-  describe "GET /static_pages/home" do
+  describe "GET /" do
     it "should have service title" do
-      visit '/static_pages/home'
-      page.should have_content('Glossary Maker');
+      visit root_path
+      page.should have_content('用語集メーカー');
     end
     
     it "should have the right title" do
-      visit '/static_pages/home'
-      page.should have_selector('title', :text => "Glossary Maker")
+      visit root_path
+      page.should have_selector('title', :text => full_title(''))
     end
   end
   
-  describe "GET /static_pages/help" do
+  describe "GET /help" do
     it "should have the right title" do
-      visit '/static_pages/help'
-      page.should have_selector('title', :text => "Glossary Maker | Help")
+      visit help_path
+      page.should have_selector('title', :text => full_title('ヘルプ'))
+    end
+  end
+
+  describe "GET /login" do
+    it "should have the right title" do
+      visit login_path
+      page.should have_selector('title', :text => full_title('ログイン'))
     end
   end
 end
