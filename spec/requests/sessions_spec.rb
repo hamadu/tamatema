@@ -33,4 +33,17 @@ describe "Authentication" do
       it { should have_link("設定") }
     end
   end
+  
+  describe "POST /logout" do
+    let(:user) { FactoryGirl.create(:user) }
+    before do
+      visit login_path
+      fill_in "Email", with:user.email
+      fill_in "Password", with:user.password
+      click_button "ログイン"
+      visit logout_path
+    end
+    it { should have_selector('title', text:full_title('')) }
+    it { should have_link('ログイン', href: login_path) }
+  end
 end
