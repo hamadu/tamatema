@@ -27,7 +27,6 @@ describe "Authentication" do
         fill_in "Password", with:user.password
         click_button "ログイン"
       end
-      
       it { should have_selector('title', text: user.name) }
     end
   end
