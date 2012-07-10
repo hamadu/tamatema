@@ -1,4 +1,6 @@
 GlossaryMaker::Application.routes.draw do
+  get "glossaries/new"
+
   root to:'static_pages#home'
   
   resources :users
