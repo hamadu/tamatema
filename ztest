@@ -1,4 +1,9 @@
 #!/bin/sh
 
-bundle exec rspec
+if [ $# -ne 1 ]; then
+	bundle exec rspec
+	exit 0
+fi
+
+bundle exec rspec $1
 
