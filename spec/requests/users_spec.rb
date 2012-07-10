@@ -37,6 +37,7 @@ describe "Users" do
         before { click_button submit }
         it { should have_selector('title', text:"Example User") }
         it { should have_content('登録完了！') }
+        it { should have_link('ログアウト', href: logout_path) }
       end
     end
 

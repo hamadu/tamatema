@@ -28,6 +28,9 @@ describe "Authentication" do
         click_button "ログイン"
       end
       it { should have_selector('title', text: user.name) }
+      it { should have_link('ログアウト', href: logout_path) }
+      it { should have_link("プロフィール", href: user_path(user)) }
+      it { should have_link("設定") }
     end
   end
 end
