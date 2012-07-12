@@ -2,6 +2,7 @@ class Glossary < ActiveRecord::Base
   attr_accessible :description, :name, :title
 
   belongs_to :user
+  has_many :words
 
   VALID_NAME_REGEX = /\A[a-z\-~_]+\z/i
   validates :name, presence: true, length: { maximum: 32 }, 

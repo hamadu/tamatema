@@ -7,4 +7,11 @@ FactoryGirl.define do
     password "aaaaaa"
     password_confirmation "aaaaaa"
   end
+  
+  factory :glossary do
+    name "glsry"
+    title "My Glossary"
+    description "descr"
+    user
+  end
 end
