@@ -23,6 +23,16 @@ class GlossariesController < ApplicationController
   
   def show
     @glossary = Glossary.find_by_name(params[:name]) || not_found
+    @view_mode = "glossary"
+    @words = {}
+    for word in @glossary.words do
+      index = word.name.slice(0, 1).upcase
+      if not @words.has_key?(index)
+        @words[index] = []
+      end
+      @words[index].push(word)
+    end
+    @words.sort
   end
   
   def edit

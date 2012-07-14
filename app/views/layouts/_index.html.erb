@@ -1,0 +1,11 @@
+<% if @view_mode and @view_mode == 'glossary' %>
+  <% if @words.keys.length >= 1 %>
+    <div class="word_index">
+      <ul>
+        <% @words.each_key do |key| %>
+          <li><%= key %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+<% end %>

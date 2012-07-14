@@ -1,3 +1,14 @@
 <% provide(:title, @glossary.title) %>
 <h1><%= @glossary.title %></h1>
 
+<% if @words.keys.length >= 1 %>
+  <% @words.each_key do |key| %>
+    <h2><%= key %></h2>
+    <% @words[key].each do |word| %>
+      <h3><%= word.name %> </h3>
+      <div class="description"><%= word.description %> </div>
+    <% end %>
+  <% end %>
+<% else %>
+  <p>この用語集にはまだ単語がありません。単語を追加してみよう！</p>
+<% end %>

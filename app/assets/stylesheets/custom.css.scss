@@ -139,3 +139,22 @@ input, textarea, select, .uneditable-input {
   @extend .error;
  }
 
+
+.word_index {
+  position: fixed;
+  left: -10px;
+  font-size: 18px;
+  font-weight: bold;
+  width: 100px;
+  vertical-align:middle;
+  border: 1px solid #006;
+}
+
+.word_index ul {
+  margin: 16px;
+  list-style-type: none;
+}
+
+.word_index ul li {
+  height: 32px;
+}
