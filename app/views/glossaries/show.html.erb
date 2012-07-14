@@ -1,14 +1,59 @@
 <% provide(:title, @glossary.title) %>
-<h1><%= @glossary.title %></h1>
+<h1>
+  <%= @glossary.title %>&nbsp;
+  <a href="javascript:void(0);" onclick="glossary_word_edit();">[+]</a>
+</h1>
 
-<% if @words.keys.length >= 1 %>
-  <% @words.each_key do |key| %>
-    <h2><%= key %></h2>
-    <% @words[key].each do |word| %>
-      <h3><%= word.name %> </h3>
-      <div class="description"><%= word.description %> </div>
+
+<div class="glossary">
+  <% if @words.keys.length >= 1 %>
+    <% @words.each_key do |key| %>
+      <h2 id="<%= key %>"><%= key %></h2>
+      <dl>
+        <% @words[key].each do |word| %>
+          <dt name="<%= key  %>_<%= word.name.crypt("zz") %> ">
+            <%= word.name %>
+            <a href="javascript:void(0);" onclick="glossary_word_edit('<%= word.id %>');">[+]</a>
+          </dt>
+          <dd><%= word.description %> </dd>
+          <div class="hide" id="word_name_<%= word.id %>"><%= word.name %></div>
+          <div class="hide" id="word_description_<%= word.id %>"><%= word.description %></div>
+        <% end %>
+      </dl>
     <% end %>
+  <% else %>
+    <p>この用語集にはまだ単語がありません。単語を追加してみよう！</p>
   <% end %>
-<% else %>
-  <p>この用語集にはまだ単語がありません。単語を追加してみよう！</p>
-<% end %>
+</div>
+
+
+<div class="modal hide" id="edit_word_modal">
+  <div class="modal-header">
+    <h3>単語を編集</h3>
+  </div>
+  <div class="modal-body">
+    <%= form_for(:word, url: '/word/create', cls: "form-horizontal") do |f| %>
+      <fieldset>
+        <input type="hidden" class="" id="word_id" name="word[id]" value="new" />
+        <div class="control-group">
+          <label class="control-label" for="word_name">項目</label>
+          <div class="controls">
+            <input type="text" class="" id="word_name" name="word[name]" value="" />
+          </div>
+        </div>
+          
+        <div class="control-group">
+          <label class="control-label" for="word_description">説明</label>
+          <div class="controls">
+            <textarea rows="3" cols="80" id="word_description" name="word[description]"></textarea>
+          </div>
+        </div>
+      </fieldset>
+    <% end %>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">Close</a>
+    <a href="#" class="btn btn-primary">Save changes</a>
+  </div>
+</div>
+  

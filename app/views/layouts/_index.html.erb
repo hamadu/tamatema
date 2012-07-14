@@ -3,7 +3,7 @@
     <div class="word_index">
       <ul>
         <% @words.each_key do |key| %>
-          <li><%= key %></li>
+        <li><a href="#<%= key %>"><%= key %></a></li>
         <% end %>
       </ul>
     </div>

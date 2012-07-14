@@ -38,8 +38,8 @@ describe "Glossary" do
         for word in glossary_words.words
           index = word.name.slice(0,1)
           page.should have_selector('h2', text: index.upcase)
-          page.should have_selector('h3', text: word.name)
-          page.should have_selector('div.description', text: word.description)
+          page.should have_selector('dt', text: word.name)
+          page.should have_selector('dd', text: word.description)
         end
       end
       

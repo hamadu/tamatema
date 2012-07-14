@@ -14,3 +14,17 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require_tree .
+
+glossary_word_edit = function(id) {
+  var selector = '#edit_word_model';
+  if (id && id != 'new') {
+    $('#word_id').val(id);
+    $('#word_name').val($('#word_name_' + id).html());
+    $('#word_description').html($('#word_description_' + id).html());
+  } else {
+    $('#word_id').val('new');
+    $('#word_name').val('');
+    $('#word_description').html('');
+  }
+  $('#edit_word_modal').modal('show');
+}
