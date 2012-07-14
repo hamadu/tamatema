@@ -27,6 +27,13 @@ describe Word do
     describe "name is too long" do
       before { @word.name = 'a' * 129 }
       it { should_not be_valid }
+    end
+    describe "when email address is already taken" do
+      before do
+        duplicate_word = @word.dup
+        duplicate_word.save
+      end
+      it { should_not be_valid }
     end    
   end
   
