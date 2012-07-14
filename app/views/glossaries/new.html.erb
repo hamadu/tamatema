@@ -1,2 +1,18 @@
-<h1>Glossaries#new</h1>
-<p>Find me in app/views/glossaries/new.html.erb</p>
+<% provide(:title, "新しい用語集を作る") %>
+<h1>新しい用語集を作る</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@glossary) do |f| %>
+      <%= render 'shared/glossary_error_messages' %>
+    
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= f.label :title %>
+      <%= f.text_field :title %>
+    
+      <%= f.submit "作成する", class:"btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

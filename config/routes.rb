@@ -4,15 +4,21 @@ GlossaryMaker::Application.routes.draw do
   root to:'static_pages#home'
   
   resources :users
-  resources :sessions, only:[:new, :create, :destroy]
+  resources :sessions, only:[:new, :create]
   
   match '/help', to:'static_pages#help'
   match '/about', to:'static_pages#about'
 
-  match '/register', to:'users#new'
-  match '/login', to:'sessions#new'
-  match '/logout', to:'sessions#destroy'
-  
+  match '/register', to: 'users#new'
+  match '/login', to: 'sessions#new'
+  match '/logout', to: 'sessions#destroy'
+
+  resources :glossaries, path: "/g/", only: [:new, :create]
+  match '/g/(:name)', to: 'glossaries#show', as: "glossary", via: "get"
+  match '/g/(:name)/edit', to: 'glossaries#edit', as: "edit_glossary", via: "get"
+  match '/g/(:name)', to: 'glossaries#update', as: "update_glossary", via: "put"
+
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

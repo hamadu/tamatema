@@ -1,0 +1,12 @@
+<% if @glossary.errors.any? %>
+  <div id="error_explanation">
+    <div class="alert alert-error">
+      [!] 登録エラー : <%= @glossary.errors.count %>項目
+    </div>
+    <ul>
+    <% @glossary.errors.full_messages.each do |msg| %>
+      <li>* <%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
