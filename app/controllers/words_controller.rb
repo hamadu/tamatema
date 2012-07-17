@@ -28,11 +28,11 @@ class WordsController < ApplicationController
   end
   
   def update
-    @word = Word.find_by_id(params[:word][:id]) || not_found
+    @word = Word.find_by_id(params[:id]) || not_found
     @word.name = params[:word][:name]
     @word.description = params[:word][:description]
     glossary = Glossary.find_by_name(params[:name])
-    if glossary and glossary.user_id == current_user.id
+    if glossary and glossary.user_id == current_user.id and @word.glossary == glossary
       @word.glossary = glossary
       if @word.save
         status = 'success'
@@ -43,6 +43,21 @@ class WordsController < ApplicationController
       status = 'failure'
     end
     render json: { status: status, data: @word, error: @word.errors.full_messages }
+  end
+  
+  def delete
+    @word = Word.find_by_id(params[:id]) || not_found
+    glossary = Glossary.find_by_name(params[:name])
+    if glossary and glossary.user_id == current_user.id and @word.glossary == glossary
+      if @word.destroy
+        status = 'success'
+      else
+        status = 'failure'
+      end
+    else
+      status = 'failure'
+    end
+    render json: { status: status }
   end
   
   private
