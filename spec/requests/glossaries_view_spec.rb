@@ -6,6 +6,7 @@ describe "Glossary" do
   subject { page }
   let(:glossary) { FactoryGirl.create(:glossary) }
   let(:user) { glossary.user }
+  let(:ya_user) { FactoryGirl.create(:user, name: "ya_user", email: "ya_user@example.com") }
   
   describe "GET /g/(name)" do
     describe "with no words" do
@@ -15,7 +16,7 @@ describe "Glossary" do
       it { should have_content('この用語集にはまだ単語がありません。単語を追加してみよう！') }
     end
     
-    describe "with words" do
+    describe "with words in my glossary" do
       let(:glossary_words) do
         test_glossary = FactoryGirl.create(:glossary).clone
         test_glossary.name = "test_test"
@@ -34,6 +35,7 @@ describe "Glossary" do
         visit glossary_path(glossary_words.name)
       }
       it { should_not have_content('この用語集にはまだ単語がありません。単語を追加してみよう！') }
+      it { should_not have_content('+') }
       it "should have content" do
         for word in glossary_words.words
           index = word.name.slice(0,1)

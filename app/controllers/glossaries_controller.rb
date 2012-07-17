@@ -33,6 +33,7 @@ class GlossariesController < ApplicationController
       @words[index].push(word)
     end
     @words = @words.sort
+    @editable = (@glossary.user == current_user)
   end
   
   def edit
