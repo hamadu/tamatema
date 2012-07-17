@@ -185,6 +185,26 @@ describe "Word" do
           }.to change(Word, :count).by(0)
         end
       end
+      
+      describe "NG" do
+        describe "non-existing word" do
+          it "should raise route error" do
+            expect {
+              post update_word_path(glossary.name, "999"), update_post_params
+            }.to raise_error(ActionController::RoutingError)
+          end
+        end
+
+        describe "mismatching glossary-word map" do
+          before { post update_word_path(glossary.name, ya_word.id), update_post_params }
+          it { response.body.should have_content('failure') }
+        end
+        
+        describe "other's word" do
+          before { post update_word_path(ya_glossary.name, ya_word.id), update_post_params }
+          it { response.body.should have_content('failure') }
+        end
+      end
     end
   end
 end
