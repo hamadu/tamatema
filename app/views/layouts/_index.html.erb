@@ -1,9 +1,9 @@
 <% if @view_mode and @view_mode == 'glossary' %>
-  <% if @words.keys.length >= 1 %>
+  <% if @words.length >= 1 %>
     <div class="word_index">
       <ul>
-        <% @words.each_key do |key| %>
-        <li><a href="#<%= key %>"><%= key %></a></li>
+        <% @words.each do |entry| %>
+        <li><a href="#<%= entry[0] %>"><%= entry[0] %></a></li>
         <% end %>
       </ul>
     </div>

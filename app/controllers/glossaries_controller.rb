@@ -32,7 +32,7 @@ class GlossariesController < ApplicationController
       end
       @words[index].push(word)
     end
-    @words.sort
+    @words = @words.sort
   end
   
   def edit
