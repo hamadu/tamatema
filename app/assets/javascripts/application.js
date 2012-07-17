@@ -35,19 +35,25 @@ glossary_word_edit = function(url) {
   });
 }
 
-/*
-  <div id="error_explanation">
-    <div class="alert alert-error">
-      [!] 登録エラー : <%= @user.errors.count %>項目
-    </div>
-    <ul>
-    <% @user.errors.full_messages.each do |msg| %>
-      <li>* <%= msg %></li>
-    <% end %>
-    </ul>
-  </div>
-*/
-
+glossary_word_delete = function(url, word) {
+  if (confirm("単語「" + word + "」を削除してもいいですか？\n操作は取り消せません。")) {
+    $.ajax({
+      type: "post",
+      url: url,
+      dataType: "json",
+      success: function(msg){
+        if (msg.status == 'success') {
+          location.reload();            
+        } else {
+          alert('エラーが発生しました。もう一度やり直してください。');
+        }
+      },
+      error: function(msg) {
+        alert('エラーが発生しました。もう一度やり直してください。');
+      }
+    });
+  }
+}
 
 build_errors = function(errors) {
   var html = "";
