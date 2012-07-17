@@ -30,13 +30,6 @@ describe "Word" do
     }
   end
 
-  let(:delete_post_params) do
-    {
-      "word_id" => word.id,
-    }
-  end
-  
-  
   after(:all)  { User.delete_all }
   
   describe "without login" do
@@ -60,8 +53,8 @@ describe "Word" do
       specify { response.should redirect_to(login_path) }      
     end
     
-    describe "POST /g/(name)/(id)" do
-      before { post delete_word_path(glossary.name, word.id), delete_post_params }
+    describe "POST /g/(name)/(id)/delete" do
+      before { post delete_word_path(glossary.name, word.id) }
       specify { response.should redirect_to(login_path) }
     end
   end
