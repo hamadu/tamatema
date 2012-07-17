@@ -30,6 +30,12 @@ describe "Word" do
     }
   end
 
+  let(:delete_post_params) do
+    {
+      "word_id" => word.id,
+    }
+  end
+  
   
   after(:all)  { User.delete_all }
   
@@ -52,6 +58,11 @@ describe "Word" do
     describe "POST /g/(name)/(id)" do
       before { post update_word_path(glossary.name, word.id), update_post_params }
       specify { response.should redirect_to(login_path) }      
+    end
+    
+    describe "POST /g/(name)/(id)" do
+      before { post delete_word_path(glossary.name, word.id), delete_post_params }
+      specify { response.should redirect_to(login_path) }
     end
   end
   
@@ -128,6 +139,40 @@ describe "Word" do
       
     end
     
+    describe "POST /g/(name)/(id)/delete" do
+      describe "OK" do
+        describe "response should success" do
+          before { post delete_word_path(glossary.name, word.id) }
+          it { response.body.should have_content('success') }
+        end
+        it "should decrease word count" do
+          expect {
+            post delete_word_path(glossary.name, word.id)
+          }.to change(Word, :count).by(-1)
+        end        
+      end
+      
+      describe "NG" do
+        describe "non-existing word" do
+          it "should raise route error" do
+            expect {
+              post delete_word_path(glossary.name, "999")
+            }.to raise_error(ActionController::RoutingError)
+          end          
+        end
+        
+        describe "mismatching glossary-word map" do
+          before { post delete_word_path(glossary.name, ya_word.id) }
+          it { response.body.should have_content('failure') }
+        end
+        
+        describe "other's word" do
+          before { post delete_word_path(ya_glossary.name, ya_word.id) }
+          it { response.body.should have_content('failure') }
+        end
+      end
+    end
+    
     describe "POST /g/(name)/(id)" do
       describe "OK" do
         describe "response should success" do
@@ -139,12 +184,6 @@ describe "Word" do
             post update_word_path(glossary.name, word.id), update_post_params
           }.to change(Word, :count).by(0)
         end
-#        it "should change word name" do
-#          subject { word }
-#          expect {
-#            post update_word_path(glossary.name, word.id), update_post_params
-#          }.to change(word, name).from("sample word").to("newword")
-#        end        
       end
     end
   end

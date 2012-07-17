@@ -23,6 +23,7 @@ GlossaryMaker::Application.routes.draw do
   match '/g/(:name)/new', to: 'words#create', as: "create_word", via: "post"
   match '/g/(:name)/(:id)', to: 'words#edit', as: "edit_word", via: "get"
   match '/g/(:name)/(:id)', to: 'words#update', as: "update_word", via: "post"
+  match '/g/(:name)/(:id)/delete', to: 'words#delete', as: "delete_word", via: "post"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
