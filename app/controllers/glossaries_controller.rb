@@ -50,6 +50,20 @@ class GlossariesController < ApplicationController
       render 'edit'
     end
   end
+  
+  def word_create
+    @word = Word.new(params[:word])
+    glossary = Glossary.find_by_id(params[:glossary_id])
+    if glossary and glossary.user_id == current_user.id
+      @word.glossary = glossary
+      if @word.save
+        flash[:success] = "登録完了！"
+        redirect_to glossary_path(@glossary.name)
+      else
+        
+      end
+    end
+  end
 
   private
     def verify_signed_in

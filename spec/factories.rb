@@ -14,4 +14,10 @@ FactoryGirl.define do
     description "descr"
     user
   end
+  
+  factory :word do
+    name "sample word"
+    description "word description in detail"
+    glossary
+  end
 end

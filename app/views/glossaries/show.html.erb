@@ -1,9 +1,8 @@
 <% provide(:title, @glossary.title) %>
 <h1>
   <%= @glossary.title %>&nbsp;
-  <a href="javascript:void(0);" onclick="glossary_word_edit();">[+]</a>
+  <a href="javascript:void(0);" onclick="glossary_word_edit('<%= new_word_path(@glossary.name) %>');">[+]</a>
 </h1>
-
 
 <div class="glossary">
   <% if @words.keys.length >= 1 %>
@@ -13,7 +12,8 @@
         <% @words[key].each do |word| %>
           <dt name="<%= key  %>_<%= word.name.crypt("zz") %> ">
             <%= word.name %>
-            <a href="javascript:void(0);" onclick="glossary_word_edit('<%= word.id %>');">[+]</a>
+            <a href="javascript:void(0);" onclick="glossary_word_edit('<%= edit_word_path(@glossary.name, word.id) %>');">[e]</a>
+            <a href="javascript:void(0);" onclick="glossary_word_delete('<%= word.id %>');">[d]</a>
           </dt>
           <dd><%= word.description %> </dd>
           <div class="hide" id="word_name_<%= word.id %>"><%= word.name %></div>
@@ -28,32 +28,8 @@
 
 
 <div class="modal hide" id="edit_word_modal">
-  <div class="modal-header">
-    <h3>単語を編集</h3>
-  </div>
-  <div class="modal-body">
-    <%= form_for(:word, url: '/word/create', cls: "form-horizontal") do |f| %>
-      <fieldset>
-        <input type="hidden" class="" id="word_id" name="word[id]" value="new" />
-        <div class="control-group">
-          <label class="control-label" for="word_name">項目</label>
-          <div class="controls">
-            <input type="text" class="" id="word_name" name="word[name]" value="" />
-          </div>
-        </div>
-          
-        <div class="control-group">
-          <label class="control-label" for="word_description">説明</label>
-          <div class="controls">
-            <textarea rows="3" cols="80" id="word_description" name="word[description]"></textarea>
-          </div>
-        </div>
-      </fieldset>
-    <% end %>
-  </div>
-  <div class="modal-footer">
-    <a href="#" class="btn" data-dismiss="modal">Close</a>
-    <a href="#" class="btn btn-primary">Save changes</a>
+  <div id="modal_content">
+    Loading...
   </div>
 </div>
   

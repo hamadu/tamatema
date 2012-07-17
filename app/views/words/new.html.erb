@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <h3>言葉を追加する</h3>
+</div>
+<%= form_for(:word, url: create_word_path(@glossary.name), cls: "form-horizontal", remote: true) do |f| %>
+  <div class="modal-body">
+    <fieldset>
+      <%= f.hidden_field "glossary_id", name: "glossary_id", value: "1" %>
+      <div class="control-group">
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+      </div>
+      <div class="control-group">
+        <%= f.label :description %>
+        <%= f.text_area :description, rows: "5" %>
+      </div>
+    </fieldset>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">キャンセル</a>
+    <%= f.submit "更新する", class:"btn btn-primary" %>
+  </div>
+<% end %>
