@@ -14,12 +14,12 @@ class WordsController < ApplicationController
       if @word.save
         status = 'success'
       else
-        status = 'failue'
+        status = 'failure'
       end
     else
       status = 'failure'
     end
-    render json: { status: status, data: @word }
+    render json: { status: status, data: @word, error: @word.errors.full_messages }
   end
   
   def edit
@@ -37,12 +37,12 @@ class WordsController < ApplicationController
       if @word.save
         status = 'success'
       else
-        status = 'failue'
+        status = 'failure'
       end
     else
       status = 'failure'
     end
-    render json: { status: status, data: @word }
+    render json: { status: status, data: @word, error: @word.errors.full_messages }
   end
   
   private
