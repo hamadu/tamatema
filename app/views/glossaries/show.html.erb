@@ -19,7 +19,7 @@
               <a href="javascript:void(0);" onclick="glossary_word_delete('<%= delete_word_path(@glossary.name, word.id) %>', '<%= word.name %>');">[d]</a>
             <% end %>
           </dt>
-          <dd><%= word.description %> </dd>
+          <dd><%= raw word.description_html %> </dd>
           <div class="hide" id="word_name_<%= word.id %>"><%= word.name %></div>
           <div class="hide" id="word_description_<%= word.id %>"><%= word.description %></div>
         <% end %>
