@@ -31,6 +31,7 @@ class WordsController < ApplicationController
     @word = Word.find_by_id(params[:id]) || not_found
     @word.name = params[:word][:name]
     @word.description = params[:word][:description]
+    @word.read = params[:word][:read]
     glossary = Glossary.find_by_name(params[:name])
     if glossary and glossary.user_id == current_user.id and @word.glossary == glossary
       @word.glossary = glossary

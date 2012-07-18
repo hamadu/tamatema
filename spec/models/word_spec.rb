@@ -7,6 +7,7 @@ describe Word do
   before do
     @word = glossary.words.build(
       name: "wd1",
+      read: "wd1",
       description: "desc desc desc"
     )
   end
@@ -15,6 +16,8 @@ describe Word do
   
   it { should respond_to(:name) }
   it { should respond_to(:description) }
+  it { should respond_to(:read) }
+  it { should respond_to(:description_html) }
   it { should respond_to(:glossary_id) }
   it { should respond_to(:glossary) }
   
@@ -30,13 +33,24 @@ describe Word do
       before { @word.name = 'a' * 129 }
       it { should_not be_valid }
     end
-    describe "when email address is already taken" do
+    describe "duplicate name is ok" do
       before do
         duplicate_word = @word.dup
         duplicate_word.save
       end
-      it { should_not be_valid }
+      it { should be_valid }
     end    
+  end
+  
+  describe "read" do
+    describe "empty read is ok" do
+      before { @word.read = "" }
+      it { should be_valid }
+    end
+    describe "too long read is ng" do
+      before { @word.read = "a" * 129 }
+      it { should_not be_valid }
+    end
   end
   
   describe "description" do

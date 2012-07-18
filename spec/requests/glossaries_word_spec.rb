@@ -21,6 +21,16 @@ describe "Word" do
     }
   end
 
+  let(:create_post_params_with_read) do
+    {
+      "glossary_id" => glossary.id,
+      "word[name]" => "newword",
+      "word[read]" => "readread",
+      "word[description]" => "newword description",          
+    }
+  end
+
+  
   let(:update_post_params) do
     {
       "glossary_id" => glossary.id,
@@ -92,7 +102,20 @@ describe "Word" do
           expect { post create_word_path(glossary.name), create_post_params }.to change(Word, :count).by(1)
         end
       end
+      
+      describe "ok with read" do
+        describe "response should success" do
+          before { post create_word_path(glossary.name), create_post_params_with_read }
+          it { response.body.should have_content('success') }
+          it { response.body.should have_content("\"name\":\"#{create_post_params_with_read["word[name]"]}\"") }
+          it { response.body.should have_content("\"read\":\"#{create_post_params_with_read["word[read]"]}\"") }
+        end
+        it "should change word count" do
+          expect { post create_word_path(glossary.name), create_post_params_with_read }.to change(Word, :count).by(1)
+        end
+      end
 
+      
       describe "different glossary" do
         describe "response should failure" do
           before { post create_word_path(ya_glossary.name), create_post_params }
@@ -171,6 +194,8 @@ describe "Word" do
         describe "response should success" do
           before { post update_word_path(glossary.name, word.id), update_post_params }
           it { response.body.should have_content('success') }
+          it { response.body.should have_content("\"name\":\"#{update_post_params["word[name]"]}\"") }
+          it { response.body.should have_content("\"read\":\"#{update_post_params["word[name]"]}\"") }
         end
         it "should not change word count" do
           expect {

@@ -1,12 +1,15 @@
 # encoding: utf-8
 
 class Word < ActiveRecord::Base
-  attr_accessible :description, :name
+  attr_accessible :description, :name, :read
   
   belongs_to :glossary
-  validates :name, presence: true, length: { maximum: 128 }, uniqueness: true
+  validates :name, presence: true, length: { maximum: 128 }
+  validates :read, length: { maximum: 128 }
   validates :description, length: { maximum: 1023 }
   validates :glossary_id, presence: true
+  
+  before_save :generate_read
   
   def description_html
     html = "";
@@ -24,4 +27,11 @@ class Word < ActiveRecord::Base
       html
     end
   end  
+  
+  private
+    def generate_read
+      if self.read == nil || self.read == ''
+        self.read = self.name
+      end
+    end
 end

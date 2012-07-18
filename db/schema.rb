@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120714131730) do
+ActiveRecord::Schema.define(:version => 20120718172008) do
 
   create_table "glossaries", :force => true do |t|
     t.string   "name"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(:version => 20120714131730) do
     t.integer  "glossary_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "read"
   end
 
   add_index "words", ["glossary_id", "name"], :name => "index_words_on_glossary_id_and_name", :unique => true
