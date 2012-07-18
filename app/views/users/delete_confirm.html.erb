@@ -1,0 +1,15 @@
+<% provide(:title, "データ削除")  %>
+<h1>データ削除</h1>
+
+
+<div class="alert alert-warning">
+  ユーザデータを削除します。作成した用語集のデータも一緒に削除されます。
+</div>
+
+<%= form_for(:delete, url: delete_user_path) do |f|  %>
+<div class="center">
+  <%= f.button "キャンセル", onclick: "location.href='#{user_path(@user)}'", class: "btn btn-large", type: "button" %>
+  &nbsp;
+  <%= f.button "削除する", onclick: "form.submit();", class: "btn btn-large btn-danger" %>
+</div>
+<% end %>

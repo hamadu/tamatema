@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   end
   
   def show
-    @user = User.find_by_id(params[:id])
+    @user = User.find_by_id(params[:id]) || not_found
     @isself = (@user == current_user)
   end
   
@@ -64,9 +64,16 @@ class UsersController < ApplicationController
   end
   
   def delete_confirm
+    @user = current_user
   end
   
   def delete
+    if current_user.destroy then
+      flash[:success] = "データを削除しました。ご利用ありがとうございました。"
+      redirect_to root_path
+    else
+      render 'delete_confirm'
+    end
   end
   
   private
