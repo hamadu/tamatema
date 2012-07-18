@@ -1,3 +1,30 @@
 <% provide(:title, @user.name)  %>
 <h1><%= @user.name %> </h1>
 
+<div class="user">
+<h2>
+  <% if @isself %>
+    あなたの用語集
+  <% else %>
+    <%= @user.name %>の用語集
+  <% end %>
+</h2>
+  <% @user.glossaries.each do |glossary| %>
+    <div class="glossary">
+      <h3><%= link_to "#{glossary.title}[#{glossary.words.size}]", glossary_path(glossary.name) %></h3>
+        <% if @isself %>
+          <div class="minimenu">
+            <%= link_to "編集する", edit_glossary_path(glossary.name) %>
+            <%= link_to "削除する", delete_glossary_path(glossary.name) %>
+          </div>
+        <% end %>
+      </div>
+  <% end %>
+
+  <% if @isself %>
+    <h2>ユーザ情報を編集する</h2>
+      <div class="glossary">
+        <h3><%= link_to "プロフィールを編集する", edit_user_path %></h3>
+      </div>
+  <% end %>
+</div>

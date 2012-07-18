@@ -1,9 +1,9 @@
-<% provide(:title, 'ユーザ登録')  %>
-<h1>ユーザ登録</h1>
+<% provide(:title, 'プロフィール編集')  %>
+<h1>プロフィール編集</h1>
 
 <div class="row">
   <div class="span6 offset3">
-    <%= form_for(@user) do |f| %>
+    <%= form_for(:user, url:update_user_path) do |f| %>
       <%= render 'shared/error_messages' %>
     
       <%= f.label :name %>
@@ -18,7 +18,7 @@
       <%= f.label :password_confirmation, "Confirmation" %>
       <%= f.password_field :password_confirmation %>
     
-      <%= f.submit "ユーザ登録", class:"btn btn-large btn-primary" %>
+      <%= f.submit "情報を更新する", class:"btn btn-large btn-primary" %>
     <% end %>
   </div>
 </div>
