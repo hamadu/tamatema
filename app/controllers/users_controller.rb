@@ -56,6 +56,7 @@ class UsersController < ApplicationController
     end
     
     if @user.save
+      sign_in @user
       redirect_to user_path(@user)
     else
       render 'edit'
