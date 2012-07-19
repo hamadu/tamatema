@@ -3,8 +3,8 @@ GlossaryMaker::Application.routes.draw do
 
   root to:'static_pages#home'
   
-  resources :users
-  resources :sessions, only:[:new, :create]
+  resources :users, only: [:create, :new]
+  resources :sessions, only: [:new, :create]
   
   match '/help', to:'static_pages#help'
   match '/about', to:'static_pages#about'
@@ -13,11 +13,17 @@ GlossaryMaker::Application.routes.draw do
   match '/login', to: 'sessions#new'
   match '/logout', to: 'sessions#destroy'
 
+  match '/user/edit', to: 'users#edit', as: "edit_user", via: 'get'
+  match '/user/edit', to: 'users#update', as: "update_user", via: 'post'
+  match '/user/delete_confirm', to: 'users#delete_confirm', as: "delete_confirm_user", via: 'get'
+  match '/user/delete', to: 'users#delete', as: "delete_user", via: 'post'
+  match '/user/(:id)', to: 'users#show', as: 'user', via: 'get'
+  
   resources :glossaries, path: "/g/", only: [:new, :create]
   match '/g/(:name)', to: 'glossaries#show', as: "glossary", via: "get"
   match '/g/(:name)/edit', to: 'glossaries#edit', as: "edit_glossary", via: "get"
   match '/g/(:name)', to: 'glossaries#update', as: "update_glossary", via: "put"
-
+  match '/g/(:name)/delete', to: 'glossaries#delete', as: "delete_glossary", via: "post"
   
   match '/g/(:name)/new', to: 'words#new', as: "new_word", via: "get"
   match '/g/(:name)/new', to: 'words#create', as: "create_word", via: "post"
