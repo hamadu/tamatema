@@ -26,7 +26,7 @@ class GlossariesController < ApplicationController
     @view_mode = "glossary"
     @words = {}
     for word in @glossary.words do
-      index = word.name.slice(0, 1).upcase
+      index = to_index word.read
       if not @words.has_key?(index)
         @words[index] = []
       end
