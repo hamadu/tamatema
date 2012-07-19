@@ -12,7 +12,7 @@ describe "StaticPages" do
     it { should have_selector('title', text:full_title('')) }
     
     it { should have_link('ヘルプ', href:help_path) }
-    it { should have_link('ログイン', href:login_path) }
+    it { should have_link('Twitterでログイン', href: '/auth/twitter') }
   end
   
   describe "GET /help" do
