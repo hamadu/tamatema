@@ -6,7 +6,7 @@ describe "Glossary" do
   subject { page }
   let(:glossary) { FactoryGirl.create(:glossary) }
   let(:user) { glossary.user }
-  let(:ya_user) { FactoryGirl.create(:user, name: "ya_user", email: "ya_user@example.com") }
+  let(:ya_user) { FactoryGirl.create(:user, name: "ya_user", uid: "ya_uid") }
   
   describe "GET /g/(name)" do
     describe "with no words" do

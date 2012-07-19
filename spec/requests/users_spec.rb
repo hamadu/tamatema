@@ -6,7 +6,7 @@ describe "Users" do
   subject { page }
 
   let(:user) { FactoryGirl.create(:user) }
-  let(:ya_user) { FactoryGirl.create(:user, name: "another user", email: "another@example.com") }
+  let(:ya_user) { FactoryGirl.create(:user, name: "another user", uid: "another_uid") }
   
   let(:glossary_1) { FactoryGirl.create(:glossary, name: "glossary_one", title: "glsry one", user: user) }
   let(:g1_words) {
@@ -18,43 +18,6 @@ describe "Users" do
   
 
   describe "before login" do
-    describe "GET /register" do
-      before { visit register_path }
-      it { should have_selector('h1', text:'ユーザ登録') }
-      it { should have_selector('title', text:full_title('ユーザ登録')) }
-      
-      let(:submit) { "ユーザ登録" }
-      describe "insufficient information" do
-        it "should not create user" do
-          expect { click_button submit }.not_to change(User, :count)
-        end
-        describe "after submission" do
-          before { click_button submit }
-          it { should have_selector('title', text:'ユーザ登録') }
-          it { should have_content('登録エラー') }
-        end
-      end
-      
-      
-      describe "valid information" do
-        before do
-          fill_in "Name", with:"Example User"
-          fill_in "Email", with:"user@example.com"
-          fill_in "Password", with:"aaaaaa"
-          fill_in "Confirmation", with:"aaaaaa"
-        end
-        it "should create user" do
-          expect { click_button submit }.to change(User, :count).by(1)
-        end
-        describe "after submission" do
-          before { click_button submit }
-          it { should have_selector('title', text:"Example User") }
-          it { should have_content('登録完了！') }
-          it { should have_link('ログアウト', href: logout_path) }
-        end
-      end
-    end
-    
     describe "GET /users/show/id" do
       before { visit user_path(user) }
       it { should have_selector('h1', text:user.name) }
@@ -108,7 +71,6 @@ describe "Users" do
     describe "GET /users/edit" do
       before { visit edit_user_path }
       it { should have_selector("input[id='user_name'][value='#{user.name}']") }
-      it { should have_selector("input[id='user_email'][value='#{user.email}']") }
     end    
     
     describe "POST /users/edit" do
@@ -117,9 +79,6 @@ describe "Users" do
         before do
           visit edit_user_path
           fill_in "Name", with: "nantara"
-          fill_in "Email", with: "different@example.com"
-          fill_in "Password", with: "bbbbbb"
-          fill_in "Confirmation", with: "bbbbbb"
         end
         it "should not change user number" do
           expect { click_button submit }.not_to change(User, :count)
@@ -128,26 +87,6 @@ describe "Users" do
           before { click_button submit }
           it { User.find_by_name("nantara").should_not be_nil }
           it { User.find_by_name("山田太郎").should be_nil }
-          it { User.find_by_email("different@example.com").should_not be_nil }
-          it { User.find_by_email("yamada@example.com").should be_nil }
-        end
-      end
-      
-      describe "valid information (without password)" do
-        before do
-          visit edit_user_path
-          fill_in "Name", with: "nantara"
-          fill_in "Email", with: "different@example.com"
-        end
-        it "should not change user number" do
-          expect { click_button submit }.not_to change(User, :count)
-        end
-        describe "should change user info" do
-          before { click_button submit }
-          it { User.find_by_name("nantara").should_not be_nil }
-          it { User.find_by_name("山田太郎").should be_nil }
-          it { User.find_by_email("different@example.com").should_not be_nil }
-          it { User.find_by_email("yamada@example.com").should be_nil }
         end
       end
     end

@@ -4,13 +4,14 @@ GlossaryMaker::Application.routes.draw do
   root to:'static_pages#home'
   
   resources :users, only: [:create, :new]
-  resources :sessions, only: [:new, :create]
   
   match '/help', to:'static_pages#help'
   match '/about', to:'static_pages#about'
 
-  match '/register', to: 'users#new'
-  match '/login', to: 'sessions#new'
+  if Rails.env.test?
+    match '/login', to: 'sessions#new', as: 'login', via: 'get'
+    match '/login', to: 'sessions#create', as: 'create_sessions', via: 'post'
+  end
   match '/logout', to: 'sessions#destroy'
 
   match '/user/edit', to: 'users#edit', as: "edit_user", via: 'get'
@@ -30,6 +31,8 @@ GlossaryMaker::Application.routes.draw do
   match '/g/(:name)/(:id)', to: 'words#edit', as: "edit_word", via: "get"
   match '/g/(:name)/(:id)', to: 'words#update', as: "update_word", via: "post"
   match '/g/(:name)/(:id)/delete', to: 'words#delete', as: "delete_word", via: "post"
+  
+  match '/auth/:provider/callback', to: 'auth#callback'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

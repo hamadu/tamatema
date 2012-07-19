@@ -1,14 +1,18 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :name, :password, :password_confirmation, :temporary_key
-  has_secure_password
+  def self.create_with_omniauth(auth)
+    create! do |user|
+      user.provider = auth["provider"]
+      user.uid = auth["uid"]
+      user.name = auth["info"]["nickname"]
+    end
+    User.find_by_provider_and_uid(auth["provider"], auth["uid"])
+  end
+  
+  attr_accessible :name, :uid, :provider, :temporary_key
   
   has_many :glossaries  
   
   validates :name, presence: true, length:{ maximum: 32 }
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email, presence: true, format:{ with: VALID_EMAIL_REGEX }, uniqueness: true
-  validates :password, presence: true, length: { minimum: 6 }, :on => :create
-  validates :password_confirmation, presence: true, :on => :create
 
   before_save :create_remember_token
   

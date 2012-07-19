@@ -9,7 +9,7 @@ describe "Word" do
   let(:user) { glossary.user }
 
   
-  let(:ya_user) { FactoryGirl.create(:user, name: "ya_user", email: "ya_user@example.com") }
+  let(:ya_user) { FactoryGirl.create(:user, name: "ya_user", uid: "ya_uid") }
   let(:ya_glossary) { FactoryGirl.create(:glossary, name: "ya_glossary", user: ya_user) }
   let(:ya_word) { FactoryGirl.create(:word, name: "ya_word", glossary: ya_glossary) }
 
