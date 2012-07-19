@@ -1,11 +1,15 @@
 <% if @view_mode and @view_mode == 'glossary' %>
-  <% if @words.length >= 1 %>
-    <div class="word_index">
-      <ul>
-        <% @words.each do |entry| %>
-        <li><a href="#<%= entry[0] %>"><%= entry[0] %></a></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <div class="container">
+    <header class="jumbotron subhead" id="overview">
+      <div class="subnav subnav-fixed">
+        <ul class="nav nav-pills">
+          <li><%= link_to "[+]", login_path %></li>
+          <li><a href="#*">*</a></li>
+          <% @words.each do |entry| %>
+            <li><a href="#<%= to_id(entry[0]) %>"><%= entry[0] %></a></li>
+          <% end %>
+        </ul>
+      </div>
+    </header>
+  </div>
 <% end %>
