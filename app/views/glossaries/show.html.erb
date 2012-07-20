@@ -8,11 +8,18 @@
 
 <div class="glossary">
   <% if @words.length >= 1 %>
+    <h2 id="star">*</h2>
+    <% @words.each do |entry| %>
+      <% entry[1].each do |word| %>
+        <a href="#_<%= word.name.crypt("zz") %>"><%= word.name %></a>&nbsp;
+      <% end  %>
+    <% end %>
+    
     <% @words.each do |entry| %>
       <h2 id="<%= to_id(entry[0]) %>"><%= entry[0] %></h2>
       <dl>
         <% entry[1].each do |word| %>
-          <dt name="<%= entry[0]  %>_<%= word.name.crypt("zz") %> ">
+          <dt id="_<%= word.name.crypt("zz") %>">
             <%= word.name %>【<%= word.read %>】
             <% if @editable %>          
               <a href="javascript:void(0);" onclick="glossary_word_edit('<%= edit_word_path(@glossary.name, word.id) %>');">[e]</a>
