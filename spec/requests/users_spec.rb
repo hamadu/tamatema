@@ -56,8 +56,7 @@ describe "Users" do
       it { should have_selector('h2', text: 'ユーザ情報を編集する') }
       it { should have_link("プロフィールを編集する", href: edit_user_path) }
       it { should have_selector('h2', text: 'あなたの用語集') }
-      it { should have_link("#{glossary_1.title}[#{glossary_1.words.size}]", href: glossary_path(glossary_1.name)) }
-      it { should have_selector('h3 a', text: "#{glossary_1.title}[#{glossary_1.words.size}]") }
+      it { should have_link("#{glossary_1.title}", href: glossary_path(glossary_1.name)) }
       it { should have_link("編集する", href: edit_glossary_path(glossary_1.name)) }
       it { should have_link("削除する", href: delete_glossary_path(glossary_1.name)) }
     end
@@ -104,8 +103,7 @@ describe "Users" do
       }
       it { should_not have_selector('h2', text: 'ユーザ情報を編集する') }
       it { should have_selector('h2', text: "#{user.name}の用語集") }
-      it { should have_link("#{glossary_1.title}[#{glossary_1.words.size}]", href: glossary_path(glossary_1.name)) }
-      it { should have_selector('h3 a', text: "#{glossary_1.title}[#{glossary_1.words.size}]") }
+      it { should have_link("#{glossary_1.title}", href: glossary_path(glossary_1.name)) }
       it { should_not have_link("編集する", href: edit_glossary_path(glossary_1.name))}
       it { should_not have_link("削除する", href: delete_glossary_path(glossary_1.name))}
     end

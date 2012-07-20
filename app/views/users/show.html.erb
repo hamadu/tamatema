@@ -4,36 +4,47 @@
 <div class="user">
 <h2>
   <% if @isself %>
-    あなたの用語集 <%= link_to "+", new_glossary_path, class: "btn btn-primary"  %>
+    あなたの用語集
+    <a href="<%= new_glossary_path %>" class="btn btn-primary">
+      <i class="icon-plus icon-white"></i>
+    </a>
   <% else %>
     <%= @user.name %>の用語集
   <% end %>
 </h2>
+ 
   
+<table class="table table-striped">
+  <tbody>
   <% @user.glossaries.each do |glossary| %>
-    <div class="glossary">
-      <h3><%= link_to "#{glossary.title}[#{glossary.words.size}]", glossary_path(glossary.name) %></h3>
+    <tr class="glossary">
+      <td style="font-size: 16px;">
+        <%= link_to "#{glossary.title}", glossary_path(glossary.name) %>&nbsp;<span class="label"><%= glossary.words.size %> words</span>
+      </td>
+      <td style="width: 20%">
         <% if @isself %>
-          <div class="minimenu">
-            <%= link_to "編集する", edit_glossary_path(glossary.name), class: "btn btn-small" %>
-            <%= link_to "削除する", delete_glossary_path(glossary.name), class: "btn btn-small  btn-danger" %>
-          </div>
+            <a href="<%= edit_glossary_path(glossary.name) %>" class="btn btn-small">
+              <i class="icon-edit"></i>&nbsp;編集する
+            </a>
         <% end %>
-      </div>
+      </td>
+      <td style="width: 20%">
+        <% if @isself %>
+            <a href="<%= delete_glossary_path(glossary.name) %>" class="btn btn-small btn-danger">
+              <i class="icon-trash icon-white"></i>&nbsp;削除する
+            </a>
+        <% end %>
+      </td>
+    </tr>
   <% end %>
-  <div class="glossary">
-    
-  </div>
+  </tbody>
+</table>
   
   <% if @isself %>
     <h2>ユーザ情報を編集する</h2>
     <div class="glossary">
       <div class="btn-group">
         <%= link_to "プロフィールを編集する", edit_user_path, class: "btn" %>
-      </div>
-      <br/>
-      <div class="btn-group">
-        <%= link_to "アカウントを削除する", delete_confirm_user_path, class: "btn btn-danger" %>
       </div>
     </div>
   <% end %>
