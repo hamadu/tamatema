@@ -9,11 +9,13 @@
 <div class="glossary">
   <% if @words.length >= 1 %>
     <h2 id="star">*</h2>
-    <% @words.each do |entry| %>
-      <% entry[1].each do |word| %>
-        <a href="#_<%= word.name.crypt("zz") %>"><%= word.name %></a>&nbsp;
-      <% end  %>
-    <% end %>
+    <div class="star_content">
+      <% @words.each do |entry| %>
+        <% entry[1].each do |word| %>
+          <a href="#_<%= word.name.crypt("zz") %>"><%= word.name %></a>&nbsp;
+        <% end  %>
+      <% end %>
+    </div>
     
     <% @words.each do |entry| %>
       <h2 id="<%= to_id(entry[0]) %>"><%= entry[0] %></h2>
@@ -43,4 +45,20 @@
     Loading...
   </div>
 </div>
-  
+
+<script>
+  setupScrollClick = function() {
+    $('ul.nav a, div.star_content a').click(function(e) {
+      var target = e.target.href;
+      var tgt = target.split("#");
+      if (tgt.length >= 2) {
+        var toward = $("#" + tgt[tgt.length-1]).offset().top - 80;
+        console.log(toward);
+        $("html,body").animate({
+          scrollTop: toward
+        }, 50);
+        return false;
+      }
+    })
+  }();
+</script>
