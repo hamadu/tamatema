@@ -3,7 +3,9 @@
     <header class="jumbotron subhead" id="overview">
       <div class="subnav subnav-fixed">
         <ul class="nav nav-pills">
-          <li><a href="javascript:void(0);" onclick="glossary_word_edit('<%= new_word_path(@glossary.name) %>');">[+]</a></li>
+          <% if @editable %>          
+            <li><a href="javascript:void(0);" onclick="glossary_word_edit('<%= new_word_path(@glossary.name) %>');">[+]</a></li>
+          <% end %>
           <li><a href="#star">*</a></li>
           <% @words.each do |entry| %>
             <li><a href="#<%= to_id(entry[0]) %>"><%= entry[0] %></a></li>

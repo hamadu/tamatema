@@ -7,15 +7,15 @@
     <fieldset>
       <%= f.hidden_field "glossary_id", name: "glossary_id", value: "1" %>
       <div class="control-group">
-        <%= f.label :name %>
+        <%= f.label :name, "言葉" %>
         <%= f.text_field :name %>
       </div>
       <div class="control-group">
-        <%= f.label :read %>
+        <%= f.label :read, "読み方（空白にすると言葉と同じになります）" %>
         <%= f.text_field :read %>
       </div>
       <div class="control-group">
-        <%= f.label :description %>
+        <%= f.label :description, "意味・説明" %>
         <%= f.text_area :description, rows: "5" %>
       </div>
     </fieldset>

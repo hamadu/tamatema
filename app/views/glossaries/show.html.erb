@@ -1,5 +1,5 @@
 <% provide(:title, @glossary.title) %>
-<h1>
+<h1 id="top">
   <%= @glossary.title %>&nbsp;
   <% if @editable %>
     <a href="javascript:void(0);" onclick="glossary_word_edit('<%= new_word_path(@glossary.name) %>');">[+]</a>
@@ -18,25 +18,34 @@
     </div>
     
     <% @words.each do |entry| %>
-      <h2 id="<%= to_id(entry[0]) %>"><%= entry[0] %></h2>
-      <dl>
-        <% entry[1].each do |word| %>
-          <dt id="_<%= word.name.crypt("zz") %>">
-            <%= word.name %>【<%= word.read %>】
-            <% if @editable %>          
-              <a href="javascript:void(0);" onclick="glossary_word_edit('<%= edit_word_path(@glossary.name, word.id) %>');">[e]</a>
-              <a href="javascript:void(0);" onclick="glossary_word_delete('<%= delete_word_path(@glossary.name, word.id) %>', '<%= word.name %>');">[d]</a>
-            <% end %>
-          </dt>
-          <dd><%= raw word.description_html %> </dd>
-          <div class="hide" id="word_name_<%= word.id %>"><%= word.name %></div>
-          <div class="hide" id="word_description_<%= word.id %>"><%= word.description %></div>
-        <% end %>
-      </dl>
+      <div class="index"> 
+        <h2 id="<%= to_id(entry[0]) %>"><%= entry[0] %></h2>
+            <dl>
+              <% entry[1].each do |word| %>
+                <dt id="_<%= word.name.crypt("zz") %>">
+                <%= word.name %>【<%= word.read %>】
+                <% if @editable %>
+                  <a href="javascript:void(0);" class="btn btn-small" onclick="glossary_word_edit('<%= edit_word_path(@glossary.name, word.id) %>');">
+                    <i class="icon-edit"></i></a>
+                  <a href="javascript:void(0);" class="btn btn-small btn-danger" onclick="glossary_word_delete('<%= delete_word_path(@glossary.name, word.id) %>', '<%= word.name %>');">
+                    <i class="icon-trash icon-white"></i></a>
+                <% end %>
+                </dt>
+                <dd><%= raw word.description_html %> </dd>
+                <div class="hide" id="word_name_<%= word.id %>"><%= word.name %></div>
+                <div class="hide" id="word_description_<%= word.id %>"><%= word.description %></div>
+              <% end %>
+        </dl>
+      </div>
     <% end %>
   <% else %>
     <p>この用語集にはまだ単語がありません。単語を追加してみよう！</p>
   <% end %>
+</div>
+
+<div class="pagetop">
+  <a href="#top" class="btn btn-small">
+    <i class="icon-arrow-up"></i></a>
 </div>
 
 
@@ -48,7 +57,7 @@
 
 <script>
   setupScrollClick = function() {
-    $('ul.nav a, div.star_content a').click(function(e) {
+    $('a').click(function(e) {
       var target = e.target.href;
       var tgt = target.split("#");
       if (tgt.length >= 2) {

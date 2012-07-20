@@ -5,7 +5,7 @@
     <%= form_for(@glossary) do |f| %>
       <%= render 'shared/glossary_error_messages' %>
     
-      <%= f.label :name %>
+      <%= f.label :name, "ID(半角英数字)" %>
       <%= f.text_field :name %>
 
       <%= f.label :title %>
