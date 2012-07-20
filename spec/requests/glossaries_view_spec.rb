@@ -35,11 +35,13 @@ describe "Glossary" do
         visit glossary_path(glossary_words.name)
       }
       it { should_not have_content('この用語集にはまだ単語がありません。単語を追加してみよう！') }
-      it { should_not have_content('+') }
       it "should have content" do
         for word in glossary_words.words
-          index = word.name.slice(0,1)
-          page.should have_selector('h2', text: index.upcase)
+          index = word.name.slice(0,1).upcase
+          if "0" <= index && index <= "9" then
+            index = "数"
+          end
+          page.should have_selector('h2', text: index)
           page.should have_selector('dt', text: word.name)
           page.should have_selector('dd', text: word.description)
         end
@@ -47,8 +49,11 @@ describe "Glossary" do
       
       it "should have right index" do
         for word in glossary_words.words
-          index = word.name.slice(0,1)
-          page.should have_selector('div.word_index ul li', text: index.upcase)
+          index = word.name.slice(0,1).upcase
+          if "0" <= index && index <= "9" then
+            index = "数"
+          end
+          page.should have_selector('div.subnav a', text: index)
         end
       end
     end    

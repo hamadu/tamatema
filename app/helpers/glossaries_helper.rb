@@ -19,7 +19,7 @@ module GlossariesHelper
     first_character = name.slice(0, 1)
     first_character.upcase!
     first_character.tr!("ァ-ン", "ぁ-ん")
-    if first_character.sub(/[A-Zぁ-ん]/, "").size >= 1
+    if first_character.sub(/[0-9A-Zぁ-ん]/, "").size >= 1
       return "他"
     end
     
