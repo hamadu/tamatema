@@ -61,12 +61,6 @@ describe "Users" do
       it { should have_link("削除する", href: delete_glossary_path(glossary_1.name)) }
     end
     
-    describe "GET /" do
-      before { visit root_path }
-      it { should have_selector('h1', text: user.name) }
-      it { should have_selector('title', text: user.name)}      
-    end
-    
     describe "GET /users/edit" do
       before { visit edit_user_path }
       it { should have_selector("input[id='user_name'][value='#{user.name}']") }

@@ -12,6 +12,8 @@ class WordsController < ApplicationController
     if glossary and glossary.user_id == current_user.id
       @word.glossary = glossary
       if @word.save
+        @word.glossary.updated_at = @word.updated_at
+        @word.glossary.save
         status = 'success'
       else
         status = 'failure'

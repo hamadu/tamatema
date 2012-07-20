@@ -21,6 +21,9 @@
       <td style="font-size: 16px;">
         <%= link_to "#{glossary.title}", glossary_path(glossary.name) %>&nbsp;<span class="label"><%= glossary.words.size %> words</span>
       </td>
+      <td>
+        /g/<%= glossary.name %>
+      </td>
       <td style="width: 20%">
         <% if @isself %>
             <a href="<%= edit_glossary_path(glossary.name) %>" class="btn btn-small">

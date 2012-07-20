@@ -1,2 +1,34 @@
-<h1>Glossary Maker</h1>
-<p>Find me in app/views/static_pages/home.html.erb</p>
+<header class="jumbotron masthead">
+  <div class="center">
+    <h1>たまてま</h1>
+    <p>「たまてま」は、言葉をまとめて整理する、用語集が作れるWebサービスです。</p>
+    <p class="download-info">
+      <% if current_user %>
+        <%= link_to("ユーザページヘ", user_path(current_user), class: "btn btn-primary btn-large") %>
+      <% else %>
+        <%= link_to("Twitterでログイン", "/auth/twitter", class: "btn btn-primary btn-large") %>
+      <% end %>
+    </p>
+  </div>
+</header>
+
+
+<div class="summary row">
+  <div class="span6">
+    <h2>最近更新された用語集</h2>
+    <% @glossaries.each do |glossary| %>
+      <div style="padding: 5px; font-size: 14px;">
+        <%= link_to "#{glossary.title}", glossary_path(glossary.name) %>&nbsp;<span class="label"><%= glossary.words.size %> words</span>
+      </div>
+    <% end %>
+  </div>
+  
+  <div class="span6">
+    <h2>人気の用語集</h2>
+    <% @glossaries.each do |glossary| %>
+      <div style="padding: 5px; font-size: 14px;">
+        <%= link_to "#{glossary.title}", glossary_path(glossary.name) %>&nbsp;<span class="label"><%= glossary.words.size %> words</span>
+      </div>
+    <% end %>
+  </div>  
+</div>

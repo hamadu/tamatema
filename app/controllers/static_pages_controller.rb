@@ -2,7 +2,7 @@
 
 class StaticPagesController < ApplicationController
   def home
-    redirect_to user_path(current_user) if current_user != nil
+    @glossaries = Glossary.order("updated_at DESC").limit(10)
   end
 
   def help
