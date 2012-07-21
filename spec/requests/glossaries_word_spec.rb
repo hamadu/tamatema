@@ -135,7 +135,6 @@ describe "Word" do
         before { visit edit_word_path(glossary.name, word.id) }
         describe "should have content" do
           it { should have_selector('h3', text: edit_page_title) }
-          it { should have_selector("input[id='word_id'][value='#{word.id}']") }
           it { should have_selector("input[id='word_name'][value='#{word.name}']") }
           it { should have_selector("textarea[id='word_description']", text: word.description) }
         end

@@ -16,7 +16,6 @@ describe "Word" do
 
   let(:create_post_params) do
     {
-      "glossary_id" => glossary.id,
       "word[name]" => "newword",
       "word[description]" => "newword description",          
     }
@@ -24,8 +23,6 @@ describe "Word" do
 
   let(:update_post_params) do
     {
-      "glossary_id" => glossary.id,
-      "word[id]" => word.id,
       "word[name]" => "newword",
       "word[description]" => "newword description",          
     }
@@ -71,9 +68,6 @@ describe "Word" do
         before { visit edit_word_path(ya_glossary_user.name, ya_word_user.id) }
         describe "should have content" do
           it { should have_selector('h3', text: edit_page_title) }
-          it { should have_selector("input[id='word_id'][value='#{ya_word_user.id}']") }
-          it { should have_selector("input[id='word_name'][value='#{ya_word_user.name}']") }
-          it { should have_selector("textarea[id='word_description']", text: ya_word_user.description) }
         end
       end
     end
