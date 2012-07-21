@@ -58,8 +58,9 @@ describe "Glossary" do
       
       describe "sufficient information" do
         before do 
-          fill_in "Name", with:"exampl"
-          fill_in "Title", with:"Example GLSL"
+          fill_in "ID", with:"exampl"
+          fill_in "用語集名", with:"Example GLSL"
+          choose "glossary_private_s"
         end
         it "should create new glossary" do
           expect { click_button submit }.to change(Glossary, :count).by(1)
@@ -81,8 +82,8 @@ describe "Glossary" do
       let(:submit) { "更新する" }
       describe "insufficient information" do
         before do
-          fill_in "Name", with: ""
-          fill_in "Title", with: ""
+          fill_in "ID", with: ""
+          fill_in "用語集名", with: ""
         end
         describe "after submission" do
           before { click_button submit }
@@ -102,8 +103,8 @@ describe "Glossary" do
       
       describe "sufficient information" do
         before do
-          fill_in "Name", with: "newname"
-          fill_in "Title", with: "New Name"
+          fill_in "ID", with: "newname"
+          fill_in "用語集名", with: "New Name"
         end        
         describe "after submission" do
           it "should update new glossary" do

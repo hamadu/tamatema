@@ -10,7 +10,13 @@
 
       <%= f.label :title %>
       <%= f.text_field :title %>
-    
+
+      <div class="control-group">    
+        <%= f.label :private %>
+        <%= f.radio_button :private, "S" %> <label for="glossary_private_s">自分だけ編集できる</label>
+        <%= f.radio_button :private, "U" %> <label for="glossary_private_u">ユーザ全員が編集できる</label>
+      </div>
+
       <%= f.submit "作成する", class:"btn btn-large btn-primary" %>
     <% end %>
   </div>

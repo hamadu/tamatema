@@ -7,13 +7,15 @@ describe "Glossary" do
   let(:glossary) { FactoryGirl.create(:glossary) }
   let(:user) { glossary.user }
   let(:ya_user) { FactoryGirl.create(:user, name: "ya_user", uid: "ya_uid") }
+  let(:self_glossary) { FactoryGirl.create(:glossary, name: "self", user: ya_user) }
+  let(:user_glossary) { FactoryGirl.create(:glossary, name: "user", user: ya_user, private: Glossary::PRIVATE_USER) }
   
   describe "GET /g/(name)" do
     describe "with no words" do
       before { visit glossary_path(glossary.name) }
       it { should have_selector('h1', text: glossary.title) }
       it { should have_selector('title', text: glossary.title) }
-      it { should have_content('この用語集にはまだ単語がありません。単語を追加してみよう！') }
+      it { should have_content('この用語集にはまだ単語がありません。') }
     end
     
     describe "with words in my glossary" do
@@ -34,7 +36,7 @@ describe "Glossary" do
       before {
         visit glossary_path(glossary_words.name)
       }
-      it { should_not have_content('この用語集にはまだ単語がありません。単語を追加してみよう！') }
+      it { should_not have_content('この用語集にはまだ単語がありません。') }
       it "should have content" do
         for word in glossary_words.words
           index = word.name.slice(0,1).upcase
@@ -57,5 +59,24 @@ describe "Glossary" do
         end
       end
     end    
+  end
+  
+  describe "GET /g/(name)" do
+    before { sign_in user }
+    describe "self glossary" do
+      before { visit glossary_path(self_glossary.name) }
+      it { should have_selector('h1', text: self_glossary.title) }
+      it { should have_selector('title', text: self_glossary.title) }
+      it { should_not have_link('[+]') }
+      it { should_not have_content('この用語集にはまだ単語がありません。単語を追加してみよう！') }
+    end
+    
+    describe "user glossary" do
+      before { visit glossary_path(user_glossary.name) }
+      it { should have_selector('h1', text: user_glossary.title) }
+      it { should have_selector('title', text: user_glossary.title) }
+      it { should have_link('[+]') }
+      it { should have_content('この用語集にはまだ単語がありません。単語を追加してみよう！') }
+    end  
   end
 end

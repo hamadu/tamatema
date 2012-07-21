@@ -4,10 +4,13 @@ require 'spec_helper'
 
 describe Glossary do
   let(:user) { FactoryGirl.create(:user) }
+  let(:ya_user) { FactoryGirl.create(:user, name: "ya_user", uid: "ya_uid") }
+  
   before {
     @glossary = user.glossaries.build(
       name: "glsr",
       title: "My Glossary",
+      private: Glossary::PRIVATE_USER,
       description: "Descri!"
     )
   }
@@ -15,9 +18,11 @@ describe Glossary do
   
   it { should respond_to(:name) }
   it { should respond_to(:title) }
+  it { should respond_to(:private) }
   it { should respond_to(:description) }
   it { should respond_to(:user_id) }
   it { should respond_to(:user) }
+  
   its(:user) { should == user }
     
   it { should be_valid }
@@ -69,6 +74,31 @@ describe Glossary do
     describe "too long description" do
       before { @glossary.description = "a" * 1025 }
       it { should_not be_valid }
+    end
+  end
+  
+  describe "private" do
+    describe "private is not present" do
+      before { @glossary.private = "" }
+      it { should_not be_valid }
+    end
+    describe "private is invalid" do
+      before { @glossary.private = "invalid" }
+      it { should_not be_valid }
+    end
+    describe "can_edit" do
+      describe "private self" do
+        before { @glossary.private = Glossary::PRIVATE_SELF }
+        it { @glossary.can_edit(user).should be_true }
+        it { @glossary.can_edit(ya_user).should be_false }
+        it { @glossary.can_edit(nil).should be_false }
+      end
+      describe "private user" do
+        before { @glossary.private = Glossary::PRIVATE_USER }
+        it { @glossary.can_edit(user).should be_true }
+        it { @glossary.can_edit(ya_user).should be_true }
+        it { @glossary.can_edit(nil).should be_false }
+      end
     end
   end
   

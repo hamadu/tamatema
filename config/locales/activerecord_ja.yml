@@ -4,6 +4,7 @@ ja:
       glossary:
         name: ID
         title: 用語集名
+        private: 編集権限
       word:
         name: 言葉
         read: 読み方

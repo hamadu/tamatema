@@ -118,6 +118,12 @@ input, textarea, select, .uneditable-input {
   @include box_sizing;
 }
 
+input[type='checkbox'], input[type='radio'] {
+  padding: 4px;
+  margin-right: 10px;
+  float: left;
+}
+
 #error_explanation {
   color: #f00;
   ul {

@@ -9,7 +9,7 @@ class WordsController < ApplicationController
   def create
     @word = Word.new(params[:word])
     glossary = Glossary.find_by_name(params[:name])
-    if glossary and glossary.user_id == current_user.id
+    if glossary and glossary.can_edit(current_user)
       @word.glossary = glossary
       if @word.save
         @word.glossary.updated_at = @word.updated_at
@@ -35,7 +35,7 @@ class WordsController < ApplicationController
     @word.description = params[:word][:description]
     @word.read = params[:word][:read]
     glossary = Glossary.find_by_name(params[:name])
-    if glossary and glossary.user_id == current_user.id and @word.glossary == glossary
+    if glossary and glossary.can_edit(current_user) and @word.glossary == glossary
       @word.glossary = glossary
       if @word.save
         status = 'success'
@@ -51,7 +51,7 @@ class WordsController < ApplicationController
   def delete
     @word = Word.find_by_id(params[:id]) || not_found
     glossary = Glossary.find_by_name(params[:name])
-    if glossary and glossary.user_id == current_user.id and @word.glossary == glossary
+    if glossary and glossary.can_edit(current_user) and @word.glossary == glossary
       if @word.destroy
         status = 'success'
       else
@@ -70,6 +70,6 @@ class WordsController < ApplicationController
     
     def verify_glossary
       @glossary = Glossary.find_by_name(params[:name])
-      not_found unless @glossary and @glossary.user_id == current_user.id      
+      not_found unless @glossary and @glossary.can_edit(current_user)
     end
 end

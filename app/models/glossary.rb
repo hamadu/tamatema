@@ -1,5 +1,10 @@
 class Glossary < ActiveRecord::Base
-  attr_accessible :description, :name, :title
+  PRIVATE_ONLY = "O"
+  PRIVATE_SELF = "S"
+  PRIVATE_USER = "U"
+  PRIVATE_PUBLIC = "P"
+  
+  attr_accessible :description, :name, :title, :private
   
   belongs_to :user
   has_many :words
@@ -10,4 +15,10 @@ class Glossary < ActiveRecord::Base
   validates :title, presence: true, length: { maximum: 128 }
   validates :description, length: { maximum: 1024 }
   validates :user_id, presence: true
+  validates :private, presence: true, :format => { :with => /\A[OSUP]\z/ }
+  
+  def can_edit(user)
+    return false if user == nil
+    (user == self.user || self.private == Glossary::PRIVATE_USER)
+  end
 end

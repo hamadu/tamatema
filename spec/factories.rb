@@ -10,6 +10,7 @@ FactoryGirl.define do
   factory :glossary do
     name "glsry"
     title "My Glossary"
+    private Glossary::PRIVATE_SELF
     description "descr"
     user
   end
