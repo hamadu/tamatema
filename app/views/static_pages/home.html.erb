@@ -19,6 +19,9 @@
     <% @recent_glossaries.each do |glossary| %>
       <div style="padding: 5px; font-size: 14px;">
         <%= link_to "#{glossary.title}", glossary_path(glossary.name) %>&nbsp;<span class="label"><%= glossary.words.size %> words</span>
+        <% if glossary.can_edit current_user %>
+          <span class="label label-success">editable</span>
+        <% end %>        
       </div>
     <% end %>
   </div>
@@ -28,6 +31,9 @@
     <% @popular_counts.each do |glossary| %>
       <div style="padding: 5px; font-size: 14px;">
         <%= link_to "#{glossary.title}", glossary_path(glossary.name) %>&nbsp;<span class="label"><%= glossary.words.size %> words</span>
+        <% if glossary.can_edit current_user %>
+          <span class="label label-success">editable</span>
+        <% end %>        
       </div>
     <% end %>
   </div>  

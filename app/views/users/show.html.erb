@@ -20,6 +20,16 @@
     <tr class="glossary">
       <td style="font-size: 16px;">
         <%= link_to "#{glossary.title}", glossary_path(glossary.name) %>&nbsp;<span class="label"><%= glossary.words.size %> words</span>
+        <% if @isself %>
+          <% if glossary.private == Glossary::PRIVATE_SELF %>
+            <span class="label">only creator can edit</span>
+          <% else %>
+            <span class="label">anyone can edit</span>
+          <% end %>
+        <% end %>
+        <% if glossary.can_edit current_user %>
+          <span class="label label-success">editable</span>
+        <% end %>
       </td>
       <td>
         /g/<%= glossary.name %>
