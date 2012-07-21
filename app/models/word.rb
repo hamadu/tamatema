@@ -28,6 +28,14 @@ class Word < ActiveRecord::Base
     end
   end  
   
+  def read_in_glossary
+    if name == read
+      "-"
+    else
+      name
+    end
+  end
+  
   private
     def generate_read
       if self.read == nil || self.read == ''
