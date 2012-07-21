@@ -71,7 +71,7 @@ describe "Users" do
       describe "valid information" do
         before do
           visit edit_user_path
-          fill_in "Name", with: "nantara"
+          fill_in "名前", with: "nantara"
         end
         it "should not change user number" do
           expect { click_button submit }.not_to change(User, :count)

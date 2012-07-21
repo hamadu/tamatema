@@ -1,6 +1,8 @@
 ja:
   activerecord:
     attributes:
+      user:
+        name: 名前
       glossary:
         name: ID
         title: 用語集名

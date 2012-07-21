@@ -4,7 +4,7 @@ require 'spec_helper'
 
 describe "StaticPages" do
   subject { page }
-  service_title = "用語集メーカー"
+  service_title = "たまてま"
   
   describe "GET /" do
     before { visit root_path }
