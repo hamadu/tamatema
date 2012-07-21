@@ -14,6 +14,13 @@ module GlossariesHelper
       { first: "や", last: "よ", map: "や" },
       { first: "わ", last: "ん", map: "わ" },
       { first: "0", last: "9", map: "数" },
+      { first: "A", last: "D", map: "ABCD" },
+      { first: "E", last: "G", map: "EFG" },
+      { first: "H", last: "K", map: "HIJK" },
+      { first: "L", last: "N", map: "LMN" },
+      { first: "O", last: "R", map: "OPQR" },
+      { first: "S", last: "U", map: "STU" },
+      { first: "V", last: "Z", map: "VWXYZ" },
     ]
     
     first_character = name.slice(0, 1)
@@ -37,7 +44,7 @@ module GlossariesHelper
   end
   
   def to_id(first_character)
-    if first_character.sub(/[A-Z]/, "").size == 0
+    if first_character.sub(/[A-Z]+/, "").size == 0
       return first_character
     else
       map = {

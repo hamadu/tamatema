@@ -23,7 +23,7 @@
             <dl>
               <% entry[1].each do |word| %>
                 <dt id="_<%= word.name.crypt("zz") %>">
-                <%= word.name %>【<%= word.read %>】
+                <%= word.name %>【<%= word.read_in_glossary %>】
                 <% if @editable %>
                   <a href="javascript:void(0);" class="btn btn-small" onclick="glossary_word_edit('<%= edit_word_path(@glossary.name, word.id) %>');">
                     <i class="icon-edit"></i></a>
