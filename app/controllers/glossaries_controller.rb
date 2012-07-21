@@ -33,6 +33,10 @@ class GlossariesController < ApplicationController
     end
     @words = @words.sort
     @editable = @glossary.can_edit(current_user)
+    
+    if current_user and current_user != @glossary.user
+      @glossary.countup
+    end
   end
   
   def edit

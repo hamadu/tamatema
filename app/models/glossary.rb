@@ -8,6 +8,7 @@ class Glossary < ActiveRecord::Base
   
   belongs_to :user
   has_many :words
+  has_one :count
 
   VALID_NAME_REGEX = /\A[a-z\-~_]+\z/i
   validates :name, presence: true, length: { maximum: 32 }, 
@@ -20,5 +21,27 @@ class Glossary < ActiveRecord::Base
   def can_edit(user)
     return false if user == nil
     (user == self.user || self.private == Glossary::PRIVATE_USER)
+  end
+  
+  def week_count
+    create_count_ifnil
+    self.count.week
+  end
+  
+  def total_count
+    create_count_ifnil
+    self.count.total
+  end
+  
+  def countup
+    create_count_ifnil
+    self.count.up
+  end
+  
+  def create_count_ifnil
+    if self.count == nil then
+      self.count = Count.new(week: 0, total: 0, glossary_id: self.id)
+      self.count.save
+    end    
   end
 end
