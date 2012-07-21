@@ -16,7 +16,7 @@
 <div class="summary row">
   <div class="span6">
     <h2>最近更新された用語集</h2>
-    <% @glossaries.each do |glossary| %>
+    <% @recent_glossaries.each do |glossary| %>
       <div style="padding: 5px; font-size: 14px;">
         <%= link_to "#{glossary.title}", glossary_path(glossary.name) %>&nbsp;<span class="label"><%= glossary.words.size %> words</span>
       </div>
@@ -25,7 +25,7 @@
   
   <div class="span6">
     <h2>人気の用語集</h2>
-    <% @glossaries.each do |glossary| %>
+    <% @popular_counts.each do |glossary| %>
       <div style="padding: 5px; font-size: 14px;">
         <%= link_to "#{glossary.title}", glossary_path(glossary.name) %>&nbsp;<span class="label"><%= glossary.words.size %> words</span>
       </div>
