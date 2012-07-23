@@ -11,6 +11,7 @@ class StaticPagesController < ApplicationController
   end
 
   def help
+    redirect_to '/g/help'
   end
 
   def about
