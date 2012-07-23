@@ -12,6 +12,7 @@ module GlossariesHelper
       { first: "は", last: "ほ", map: "は" },
       { first: "ま", last: "も", map: "ま" },
       { first: "や", last: "よ", map: "や" },
+      { first: "ら", last: "ろ", map: "ら" },
       { first: "わ", last: "ん", map: "わ" },
       { first: "0", last: "9", map: "数" },
       { first: "A", last: "D", map: "ABCD" },
