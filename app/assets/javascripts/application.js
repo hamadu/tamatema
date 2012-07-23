@@ -35,6 +35,13 @@ glossary_word_edit = function(url) {
   });
 }
 
+glossary_delete = function(url, glossary) {
+  if (confirm("用語集「" + glossary + "」を削除してもいいですか？\n操作は取り消せません。")) {
+    $("#glossary_delete").attr("action", url);
+    $("#glossary_delete").submit();
+  }
+}
+
 glossary_word_delete = function(url, word) {
   if (confirm("単語「" + word + "」を削除してもいいですか？\n操作は取り消せません。")) {
     $.ajax({

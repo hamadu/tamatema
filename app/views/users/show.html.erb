@@ -14,26 +14,36 @@
 </h2>
  
   
-<table class="table table-striped">
+<table class="table table-striped" style="width: 91%;">
   <tbody>
   <% @user.glossaries.each do |glossary| %>
     <tr class="glossary">
       <td style="font-size: 16px;">
         <%= link_to "#{glossary.title}", glossary_path(glossary.name) %>&nbsp;<span class="label"><%= glossary.words.size %> words</span>
+        <% if @isself %>
+          <% if glossary.private == Glossary::PRIVATE_SELF %>
+            <span class="label">only creator can edit</span>
+          <% else %>
+            <span class="label">anyone can edit</span>
+          <% end %>
+        <% end %>
+        <% if glossary.can_edit current_user %>
+          <span class="label label-success">editable</span>
+        <% end %>
       </td>
       <td>
         /g/<%= glossary.name %>
       </td>
-      <td style="width: 20%">
+      <td style="width: 15%">
         <% if @isself %>
             <a href="<%= edit_glossary_path(glossary.name) %>" class="btn btn-small">
               <i class="icon-edit"></i>&nbsp;編集する
             </a>
         <% end %>
       </td>
-      <td style="width: 20%">
+      <td style="width: 15%">
         <% if @isself %>
-            <a href="<%= delete_glossary_path(glossary.name) %>" class="btn btn-small btn-danger">
+            <a href="javascript:void(0);" class="btn btn-small btn-danger"  onclick="glossary_delete('<%= delete_glossary_path(glossary.name) %>', '<%= glossary.name %>');">
               <i class="icon-trash icon-white"></i>&nbsp;削除する
             </a>
         <% end %>
@@ -52,3 +62,7 @@
     </div>
   <% end %>
 </div>
+
+<form action="" method="post" id="glossary_delete">
+  <input type="hidden" name="id" value="" />
+</form>
