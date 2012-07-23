@@ -32,7 +32,7 @@ class Word < ActiveRecord::Base
     if name == read
       "-"
     else
-      name
+      read
     end
   end
   
