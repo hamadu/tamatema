@@ -18,7 +18,12 @@ class GlossariesController < ApplicationController
     end
   end
   
-  def destroy
+  def delete
+    @glossary = Glossary.find_by_name(params[:name]) || not_found
+    if @glossary.user == current_user 
+      @glossary.destroy
+    end
+    redirect_to user_path(current_user)
   end
   
   def show
