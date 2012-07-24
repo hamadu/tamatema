@@ -6,6 +6,11 @@
   <% end %>
 </h1>
 
+<div class="center">
+  <a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja">ツイート</a>
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+
 <div class="glossary">
   <% if @words.length >= 1 %>
     <h2 id="star">*</h2>
@@ -20,12 +25,16 @@
     <% @words.each do |entry| %>
       <div class="index"> 
         <h2 id="<%= to_id(entry[0]) %>"><%= entry[0] %></h2>
-            <dl>
-              <% entry[1].each do |word| %>
+          <dl>
+            <% entry[1].each do |word| %>
               <div id="__<%= word.crypted_name %>">
                 <dt id="_<%= word.crypted_name %>">
                   <%= word.name %>【<%= word.read_in_glossary %>】
                   <span class="edit">
+                    <span class="return">
+                      <a href="javascript:void(0);" class="btn btn-xsmall btn-primary" onclick="backtoOriginal()">
+                        <i class="icon-share-alt icon-white"></i>Back</a>
+                    </span>
                     <% if @editable %>
                       <a href="javascript:void(0);" class="btn btn-xsmall" onclick="glossary_word_edit('<%= edit_word_path(@glossary.name, word.id) %>');">
                         <i class="icon-edit"></i></a>
@@ -37,9 +46,9 @@
                 <dd><%= raw word.description_html %> </dd>
                 <div class="hide" id="word_name_<%= word.id %>"><%= word.name %></div>
                 <div class="hide" id="word_description_<%= word.id %>"><%= word.description %></div>
-                </div>
-              <% end %>
-        </dl>
+              </div>
+            <% end %>
+          </dl>
       </div>
     <% end %>
   <% else %>
@@ -52,7 +61,7 @@
 </div>
 
 <div class="pagetop">
-  <a href="#top" class="btn btn-small">
+  <a href="javascript:void(0);" class="btn btn-small" onclick="_backToward=0;backtoOriginal();">
     <i class="icon-arrow-up"></i></a>
 </div>
 
@@ -64,8 +73,9 @@
 </div>
 
 <script>
-  setupScrollClick = function() {
+  var setupScrollClick = function() {
     $('a').click(function(e) {
+      _backToward = document.body.scrollTop;
       var target = e.target.href;
       var tgt = target.split("#");
       if (tgt.length >= 2) {
@@ -74,12 +84,29 @@
         $("html,body").animate({
           scrollTop: toward
         }, 50);
+        
         $(".word_selected").removeClass("word_selected");
+        $("span.return").hide();
+        
         $("#_" + tgt[tgt.length-1]).addClass("word_selected");
+        $("#_" + tgt[tgt.length-1] + " span.return").show();
         return false;
       }
     });
   }();
+  
+  var backtoOriginal = function() {
+    if (!_backToward) {
+      _backToward = 0;
+    }
+    
+    $(".word_selected").removeClass("word_selected");
+    $("span.return").hide();
+    
+    $("html,body").animate({
+      scrollTop: _backToward
+    }, 50);
+  }
   
   /*
   setupToggleMenu = function() {
