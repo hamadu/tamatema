@@ -12,7 +12,7 @@
     <div class="star_content">
       <% @words.each do |entry| %>
         <% entry[1].each do |word| %>
-          <a href="#_<%= word.name.crypt("zz") %>"><%= word.name %></a>&nbsp;
+          <a href="#_<%= word.crypted_name %>"><%= word.name %></a>&nbsp;
         <% end  %>
       <% end %>
     </div>
@@ -22,8 +22,8 @@
         <h2 id="<%= to_id(entry[0]) %>"><%= entry[0] %></h2>
             <dl>
               <% entry[1].each do |word| %>
-              <div id="__<%= word.name.crypt("zz") %>">
-                <dt id="_<%= word.name.crypt("zz") %>">
+              <div id="__<%= word.crypted_name %>">
+                <dt id="_<%= word.crypted_name %>">
                   <%= word.name %>【<%= word.read_in_glossary %>】
                   <span class="edit">
                     <% if @editable %>
