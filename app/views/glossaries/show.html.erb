@@ -22,18 +22,22 @@
         <h2 id="<%= to_id(entry[0]) %>"><%= entry[0] %></h2>
             <dl>
               <% entry[1].each do |word| %>
+              <div id="__<%= word.name.crypt("zz") %>">
                 <dt id="_<%= word.name.crypt("zz") %>">
-                <%= word.name %>【<%= word.read_in_glossary %>】
-                <% if @editable %>
-                  <a href="javascript:void(0);" class="btn btn-small" onclick="glossary_word_edit('<%= edit_word_path(@glossary.name, word.id) %>');">
-                    <i class="icon-edit"></i></a>
-                  <a href="javascript:void(0);" class="btn btn-small btn-danger" onclick="glossary_word_delete('<%= delete_word_path(@glossary.name, word.id) %>', '<%= word.name %>');">
-                    <i class="icon-trash icon-white"></i></a>
-                <% end %>
+                  <%= word.name %>【<%= word.read_in_glossary %>】
+                  <span class="edit">
+                    <% if @editable %>
+                      <a href="javascript:void(0);" class="btn btn-xsmall" onclick="glossary_word_edit('<%= edit_word_path(@glossary.name, word.id) %>');">
+                        <i class="icon-edit"></i></a>
+                      <a href="javascript:void(0);" class="btn btn-xsmall btn-danger" onclick="glossary_word_delete('<%= delete_word_path(@glossary.name, word.id) %>', '<%= word.name %>');">
+                        <i class="icon-trash icon-white"></i></a>
+                    <% end %>
+                  </span>
                 </dt>
                 <dd><%= raw word.description_html %> </dd>
                 <div class="hide" id="word_name_<%= word.id %>"><%= word.name %></div>
                 <div class="hide" id="word_description_<%= word.id %>"><%= word.description %></div>
+                </div>
               <% end %>
         </dl>
       </div>
@@ -70,8 +74,23 @@
         $("html,body").animate({
           scrollTop: toward
         }, 50);
+        $(".word_selected").removeClass("word_selected");
+        $("#_" + tgt[tgt.length-1]).addClass("word_selected");
         return false;
       }
-    })
+    });
   }();
+  
+  /*
+  setupToggleMenu = function() {
+    $('dl > div').each(function(index, element) {
+      $(element).mouseenter(function(event){
+        $('span.edit').hide();
+        $('span.edit', event.target).show();
+      }); 
+      $(element).mouseleave(function(event){
+        $('span.edit').hide();
+      }); 
+    });
+  }();*/
 </script>

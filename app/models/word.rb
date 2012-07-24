@@ -15,7 +15,8 @@ class Word < ActiveRecord::Base
     html = "";
     description.split("\n").each do |line|
       line = CGI.escapeHTML(line)
-      line.gsub!(/{(\S*)}/, "→<a href='#\\1'>\\1</a>")
+      
+      line.gsub!(/{(\S*)}/) { "→<a href='#_" + $1.crypt("zz") + "'>#{$1}</a>" }
       line.gsub!(/\[(\S*?),(\S*?)\]/, "<a href='\\1' target='_blank'>\\2</a>")
       line.gsub!(/\[(\S*?)\]/, "<a href='\\1' target='_blank'>\\1</a>")
 

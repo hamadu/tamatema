@@ -19,6 +19,7 @@ glossary_word_edit = function(url) {
   $('#modal_content').html('');
   $('#edit_word_modal').modal();
   $('#modal_content').load(url, '', function(){
+    $('input#word_name').focus();
     $('#modal_content form').ajaxComplete(function(state, ajax, status) {
       if (status.type == "POST") {
         response = $.parseJSON(ajax.responseText);
