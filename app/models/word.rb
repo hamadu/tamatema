@@ -4,12 +4,27 @@ class Word < ActiveRecord::Base
   attr_accessible :description, :name, :read
   
   belongs_to :glossary
+  has_many :word_stars
+  
   validates :name, presence: true, length: { maximum: 128 }
   validates :read, length: { maximum: 128 }
   validates :description, length: { maximum: 1023 }
   validates :glossary_id, presence: true
   
   before_save :generate_read
+  
+  def star?(user)
+    word_stars.find_by_user_id(user.id)
+  end
+  
+  def star!(user)
+    word_stars.create!(user_id: user.id)
+  end
+  
+  def unstar!(user)
+    word_stars.find_by_user_id(user.id).destroy
+  end
+
   
   def description_html
     html = "";

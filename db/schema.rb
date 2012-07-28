@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120721100227) do
+ActiveRecord::Schema.define(:version => 20120728134006) do
 
   create_table "counts", :force => true do |t|
     t.integer  "week"
@@ -44,6 +44,17 @@ ActiveRecord::Schema.define(:version => 20120721100227) do
   end
 
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
+
+  create_table "word_stars", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "word_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "word_stars", ["user_id", "word_id"], :name => "index_word_stars_on_user_id_and_word_id", :unique => true
+  add_index "word_stars", ["user_id"], :name => "index_word_stars_on_user_id"
+  add_index "word_stars", ["word_id"], :name => "index_word_stars_on_word_id"
 
   create_table "words", :force => true do |t|
     t.string   "name"

@@ -10,7 +10,8 @@ class User < ActiveRecord::Base
   
   attr_accessible :name, :uid, :provider, :temporary_key
   
-  has_many :glossaries  
+  has_many :glossaries
+  has_many :word_stars
   
   validates :name, presence: true, length:{ maximum: 32 }
 
