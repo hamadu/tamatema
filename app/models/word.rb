@@ -33,6 +33,35 @@ class Word < ActiveRecord::Base
     Digest::MD5.hexdigest(name)
   end
   
+  def read_in_sort
+    read_in_sort = read.upcase
+    read_in_sort.tr!("ァ-ン", "ぁ-ん")
+    ret_value = ""
+    replace_with = "ー"
+    for i in 0..read_in_sort.length
+      letter = read_in_sort[i..i]
+      if letter == "ー"
+        ret_value += replace_with
+      else
+        ret_value += letter
+        if /[あかさたなはまやらわぁゎヵ]/ =~ letter
+          replace_with = "あ"
+        elsif /[いきしちにひみりゐぃ]/ =~ letter
+          replace_with = "い"
+        elsif /[うくすつぬふむゆるぅ]/ =~ letter
+          replace_with = "う"
+        elsif /[えけせてねへめれゑぇ]/ =~ letter
+          replace_with = "え"
+        elsif /[おこそとのほもよろを]/ =~ letter
+          replace_with = "お"
+        else
+          replace_with = letter
+        end
+      end
+    end
+    ret_value
+  end
+  
   def read_in_glossary
     if name == read
       "-"

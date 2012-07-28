@@ -37,6 +37,11 @@ class GlossariesController < ApplicationController
       @words[index].push(word)
     end
     @words = @words.sort
+    for index in @words do
+      index[1].sort!{|a,b| a.read_in_sort <=> b.read_in_sort }
+    end
+    
+    
     @editable = @glossary.can_edit(current_user)
     
     if current_user and current_user != @glossary.user

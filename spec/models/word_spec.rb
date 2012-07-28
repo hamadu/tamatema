@@ -53,6 +53,33 @@ describe Word do
     end
   end
   
+  
+  describe "read_in_glossary" do
+    describe "different read" do
+      before { @word.read = "shouldbe" }
+      it { @word.read_in_glossary.should == @word.read }
+    end
+    describe "same read" do
+      it { @word.read_in_glossary.should == "-" }      
+    end
+  end
+  
+  describe "read_in_sort" do
+    describe "should be captal" do
+      before { @word.read = "shouldbe" }
+      it { @word.read_in_sort.should == @word.read.upcase }
+    end
+    describe "should be ひらがな" do
+      before { @word.read = "アァィオン" }
+      it { @word.read_in_sort.should == "あぁぃおん" }
+    end
+    describe "should process 「ー」 properly" do
+      before { @word.read = "あーきーすーてーのー" }
+      it { @word.read_in_sort.should == "ああきいすうてえのお" }
+    end
+  end
+
+  
   describe "description" do
     describe "empty description is ok" do
       before { @word.description = "" }
@@ -99,7 +126,7 @@ describe Word do
     end
     describe "link to another word" do
       before { @word.description = "{あいうえお}\n{かきくけこ}" }
-      it { @word.description_html.should == "→<a href='#あいうえお'>あいうえお</a><br/>→<a href='#かきくけこ'>かきくけこ</a>" }
+      it { @word.description_html.should == "→<a href='#_" + Digest::MD5.hexdigest("あいうえお") + "'>あいうえお</a><br/>→<a href='#_" + Digest::MD5.hexdigest("かきくけこ") + "'>かきくけこ</a>" }
     end
   end
 end
