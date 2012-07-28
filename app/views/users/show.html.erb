@@ -32,21 +32,24 @@
         <% if glossary.can_edit current_user %>
           <span class="label label-success">editable</span>
         <% end %>
+        <% if glossary.stars.length >= 1 %>
+          <span class="label label-warning">★<%= glossary.stars.length %></span>
+        <% end %>          
       </td>
       <td>
         /g/<%= glossary.name %>
       </td>
-      <td style="width: 15%">
+      <td style="width: 10%">
         <% if @isself %>
             <a href="<%= edit_glossary_path(glossary.name) %>" class="btn btn-small">
-              <i class="icon-edit"></i>&nbsp;編集する
+              <i class="icon-edit"></i>&nbsp;編集
             </a>
         <% end %>
       </td>
-      <td style="width: 15%">
+      <td style="width: 10%">
         <% if @isself %>
             <a href="javascript:void(0);" class="btn btn-small btn-danger"  onclick="glossary_delete('<%= delete_glossary_path(glossary.name) %>', '<%= glossary.name %>');">
-              <i class="icon-trash icon-white"></i>&nbsp;削除する
+              <i class="icon-trash icon-white"></i>&nbsp;削除
             </a>
         <% end %>
       </td>

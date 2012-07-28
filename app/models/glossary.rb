@@ -44,6 +44,11 @@ class Glossary < ActiveRecord::Base
     self.count.up
   end
   
+  def stars
+    WordStar.joins(:word).where("words.glossary_id = '#{self.id}'")
+  end
+  
+  
   def create_count_ifnil
     if self.count == nil then
       self.count = Count.new(week: 0, total: 0, glossary_id: self.id)
