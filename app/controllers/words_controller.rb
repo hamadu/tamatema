@@ -86,7 +86,7 @@ class WordsController < ApplicationController
         status = 'failure'
       end
     end
-    render json: { status: status }    
+    render json: { status: status }
   end
   
   private
