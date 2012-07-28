@@ -28,6 +28,8 @@ class GlossariesController < ApplicationController
   
   def show
     @glossary = Glossary.find_by_name(params[:name]) || not_found
+    not_found if !@glossary.can_see(current_user)
+
     @words = {}
     for word in @glossary.words do
       index = to_index word.read

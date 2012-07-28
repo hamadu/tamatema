@@ -87,14 +87,26 @@ describe Glossary do
       it { should_not be_valid }
     end
     describe "can_edit" do
+      describe "private only" do
+        before { @glossary.private = Glossary::PRIVATE_ONLY }
+        it { @glossary.can_see(user).should be_true }
+        it { @glossary.can_see(ya_user).should be_false }
+        it { @glossary.can_edit(user).should be_true }
+        it { @glossary.can_edit(ya_user).should be_false }
+        it { @glossary.can_edit(nil).should be_false }        
+      end
       describe "private self" do
         before { @glossary.private = Glossary::PRIVATE_SELF }
+        it { @glossary.can_see(user).should be_true }
+        it { @glossary.can_see(ya_user).should be_true }
         it { @glossary.can_edit(user).should be_true }
         it { @glossary.can_edit(ya_user).should be_false }
         it { @glossary.can_edit(nil).should be_false }
       end
       describe "private user" do
         before { @glossary.private = Glossary::PRIVATE_USER }
+        it { @glossary.can_see(user).should be_true }
+        it { @glossary.can_see(ya_user).should be_true }
         it { @glossary.can_edit(user).should be_true }
         it { @glossary.can_edit(ya_user).should be_true }
         it { @glossary.can_edit(nil).should be_false }

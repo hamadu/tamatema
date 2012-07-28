@@ -19,8 +19,9 @@
 
       <div class="control-group">    
         <%= f.label :private %>
-        <%= f.radio_button :private, "S" %> <label for="glossary_private_s">自分だけ編集できる</label>
         <%= f.radio_button :private, "U" %> <label for="glossary_private_u">ユーザ全員が編集できる</label>
+        <%= f.radio_button :private, "S" %> <label for="glossary_private_s">自分だけ編集できる</label>
+        <%= f.radio_button :private, "O" %> <label for="glossary_private_o">非公開</label>
       </div>
       <%= f.submit "更新する", class:"btn btn-large btn-primary" %>
     <% end %>

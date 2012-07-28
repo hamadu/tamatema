@@ -17,6 +17,12 @@ class Glossary < ActiveRecord::Base
   validates :description, length: { maximum: 1024 }
   validates :user_id, presence: true
   validates :private, presence: true, :format => { :with => /\A[OSUP]\z/ }
+
+  def can_see(user)
+    return true if (user == self.user && self.private == Glossary::PRIVATE_ONLY)
+    return false if (self.private == Glossary::PRIVATE_ONLY)
+    return true
+  end
   
   def can_edit(user)
     return false if user == nil

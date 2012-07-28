@@ -7,9 +7,10 @@ describe "Glossary" do
   let(:glossary) { FactoryGirl.create(:glossary) }
   let(:user) { glossary.user }
   let(:ya_user) { FactoryGirl.create(:user, name: "ya_user", uid: "ya_uid") }
+  let(:only_glossary) { FactoryGirl.create(:glossary, name: "only", user: user, private: Glossary::PRIVATE_ONLY) }
   let(:self_glossary) { FactoryGirl.create(:glossary, name: "self", user: ya_user) }
   let(:user_glossary) { FactoryGirl.create(:glossary, name: "user", user: ya_user, private: Glossary::PRIVATE_USER) }
-  
+
   describe "GET /g/(name)" do
     describe "with no words" do
       before { visit glossary_path(glossary.name) }
@@ -63,21 +64,39 @@ describe "Glossary" do
   end
   
   describe "GET /g/(name)" do
-    before { sign_in user }
-    describe "self glossary" do
-      before { visit glossary_path(self_glossary.name) }
-      it { should have_selector('h1', text: self_glossary.title) }
-      it { should have_selector('title', text: self_glossary.title) }
-      it { should_not have_link('[+]') }
-      it { should_not have_content('この用語集にはまだ単語がありません。単語を追加してみよう！') }
+    describe "login user" do
+      before { sign_in user }
+      describe "self glossary" do
+        before { visit glossary_path(self_glossary.name) }
+        it { should have_selector('h1', text: self_glossary.title) }
+        it { should have_selector('title', text: self_glossary.title) }
+        it { should_not have_link('[+]') }
+        it { should_not have_content('この用語集にはまだ単語がありません。単語を追加してみよう！') }
+      end
+      
+      describe "user glossary" do
+        before { visit glossary_path(user_glossary.name) }
+        it { should have_selector('h1', text: user_glossary.title) }
+        it { should have_selector('title', text: user_glossary.title) }
+        it { should have_link('[+]') }
+        it { should have_content('この用語集にはまだ単語がありません。単語を追加してみよう！') }
+      end 
+      
+      describe "only glossary" do
+        before { visit glossary_path(only_glossary.name) }
+        it { should have_selector('h1', text: only_glossary.title) }
+        it { should have_selector('title', text: only_glossary.title) }
+        it { should have_link('[+]') }
+        it { should have_content('この用語集にはまだ単語がありません。単語を追加してみよう！') }      
+      end
     end
     
-    describe "user glossary" do
-      before { visit glossary_path(user_glossary.name) }
-      it { should have_selector('h1', text: user_glossary.title) }
-      it { should have_selector('title', text: user_glossary.title) }
-      it { should have_link('[+]') }
-      it { should have_content('この用語集にはまだ単語がありません。単語を追加してみよう！') }
-    end  
+    describe "without login" do
+      describe "only glossary" do
+        it "should raise error" do
+          expect { get glossary_path(only_glossary.name) }.to raise_error(ActionController::RoutingError)
+        end
+      end      
+    end
   end
 end
