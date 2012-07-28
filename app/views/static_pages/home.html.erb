@@ -21,7 +21,10 @@
         <%= link_to "#{glossary.title}", glossary_path(glossary.name) %>&nbsp;<span class="label"><%= glossary.words.size %> words</span>
         <% if glossary.can_edit current_user %>
           <span class="label label-success">editable</span>
-        <% end %>        
+        <% end %>       
+        <% if glossary.stars.length >= 1 %>
+          <span class="label label-warning">★<%= glossary.stars.length %></span>
+        <% end %>          
       </div>
     <% end %>
   </div>
@@ -33,7 +36,10 @@
         <%= link_to "#{glossary.title}", glossary_path(glossary.name) %>&nbsp;<span class="label"><%= glossary.words.size %> words</span>
         <% if glossary.can_edit current_user %>
           <span class="label label-success">editable</span>
-        <% end %>        
+        <% end %>
+        <% if glossary.stars.length >= 1 %>
+          <span class="label label-warning">★<%= glossary.stars.length %></span>
+        <% end %>          
       </div>
     <% end %>
   </div>  
