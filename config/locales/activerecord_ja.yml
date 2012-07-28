@@ -6,6 +6,7 @@ ja:
       glossary:
         name: ID
         title: 用語集名
+        description: 説明
         private: 編集権限
       word:
         name: 言葉

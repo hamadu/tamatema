@@ -14,6 +14,7 @@ describe "Glossary" do
     describe "with no words" do
       before { visit glossary_path(glossary.name) }
       it { should have_selector('h1', text: glossary.title) }
+      it { should have_content(glossary.description) }
       it { should have_selector('title', text: glossary.title) }
       it { should have_content('この用語集にはまだ単語がありません。') }
     end

@@ -11,6 +11,9 @@
       <%= f.label :title %>
       <%= f.text_field :title %>
 
+      <%= f.label :description %>
+      <%= f.text_area :description, rows: "5" %>
+
       <div class="control-group">    
         <%= f.label :private %>
         <%= f.radio_button :private, "U", :checked => "checked" %> <label for="glossary_private_u">ユーザ全員が編集できる</label>

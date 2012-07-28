@@ -58,8 +58,9 @@ describe "Glossary" do
       
       describe "sufficient information" do
         before do 
-          fill_in "ID", with:"exampl"
-          fill_in "用語集名", with:"Example GLSL"
+          fill_in "ID", with: "exampl"
+          fill_in "用語集名", with: "Example GLSL"
+          fill_in "説明", with: "Example Description"
           choose "glossary_private_s"
         end
         it "should create new glossary" do
@@ -84,6 +85,7 @@ describe "Glossary" do
         before do
           fill_in "ID", with: ""
           fill_in "用語集名", with: ""
+          fill_in "説明", with: ""
         end
         describe "after submission" do
           before { click_button submit }
@@ -105,6 +107,7 @@ describe "Glossary" do
         before do
           fill_in "ID", with: "newname"
           fill_in "用語集名", with: "New Name"
+          fill_in "説明", with: "New Description"
         end        
         describe "after submission" do
           it "should update new glossary" do
