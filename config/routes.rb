@@ -31,7 +31,9 @@ GlossaryMaker::Application.routes.draw do
   match '/g/(:name)/(:id)', to: 'words#edit', as: "edit_word", via: "get"
   match '/g/(:name)/(:id)', to: 'words#update', as: "update_word", via: "post"
   match '/g/(:name)/(:id)/delete', to: 'words#delete', as: "delete_word", via: "post"
-  
+  match '/g/(:name)/(:id)/star', to: 'words#star', as: "star_word", via: "post"
+  match '/g/(:name)/(:id)/unstar', to: 'words#unstar', as: "unstar_word", via: "post"
+
   match '/auth/:provider/callback', to: 'auth#callback'
   
   # The priority is based upon order of creation:

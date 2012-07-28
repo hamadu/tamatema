@@ -63,6 +63,24 @@ glossary_word_delete = function(url, word) {
   }
 }
 
+glossary_word_star = function(url) {
+  $.ajax({
+    type: "post",
+    url: url,
+    dataType: "json",
+    success: function(msg){
+      if (msg.status == 'success') {
+          location.reload();            
+      } else {
+          alert('エラーが発生しました。もう一度やり直してください。');
+      }
+    },
+    error: function(msg) {
+      alert('エラーが発生しました。もう一度やり直してください。');
+    }
+  });
+}
+
 build_errors = function(errors) {
   var html = "";
   html = html.concat('<div id="error_explanation">');

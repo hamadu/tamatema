@@ -63,6 +63,32 @@ class WordsController < ApplicationController
     render json: { status: status }
   end
   
+  def star
+    @word = Word.find_by_id(params[:id]) || not_found
+    glossary = Glossary.find_by_name(params[:name])
+    if glossary and glossary.can_see(current_user) and @word.glossary == glossary
+      if @word.star!(current_user) 
+        status = 'success'
+      else
+        status = 'failure'
+      end
+    end
+    render json: { status: status }    
+  end
+  
+  def unstar
+    @word = Word.find_by_id(params[:id]) || not_found
+    glossary = Glossary.find_by_name(params[:name])
+    if glossary and glossary.can_see(current_user) and @word.glossary == glossary
+      if @word.unstar!(current_user) 
+        status = 'success'
+      else
+        status = 'failure'
+      end
+    end
+    render json: { status: status }    
+  end
+  
   private
     def verify_signed_in
       redirect_to login_path unless signed_in?

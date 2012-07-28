@@ -134,3 +134,23 @@ span.return {
 div.description {
   margin-bottom: 15px;
 }
+
+span.starnum {
+  font-size: 12px;
+}
+
+div.word {
+  position: relative;
+  border-bottom: 1px dotted #ccc;
+  margin-bottom: 4px;
+}
+
+div.word dd {
+  width: 90%;
+}
+
+div.edit_buttons {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+}
