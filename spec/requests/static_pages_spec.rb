@@ -9,18 +9,8 @@ describe "StaticPages" do
   describe "GET /" do
     before { visit root_path }
     it { should have_content(service_title) }
-    it { should have_selector('title', text:full_title('')) }
-    
-    it { should have_link('ヘルプ', href:help_path) }
+    it { should have_selector('title', text: full_title('')) }
     it { should have_link('Twitterでログイン', href: '/auth/twitter') }
-  end
-  
-  describe "GET /help" do
-    before { visit help_path }
-    it { should have_link(service_title, href:root_path) }
-
-    it { should have_selector('h1', text:'ヘルプ') }    
-    it { should have_selector('title', text:full_title('ヘルプ')) }
   end
 
   describe "GET /about" do

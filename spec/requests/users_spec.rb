@@ -58,7 +58,7 @@ describe "Users" do
       it { should have_selector('h2', text: 'あなたの用語集') }
       it { should have_link("#{glossary_1.title}", href: glossary_path(glossary_1.name)) }
       it { should have_link("編集する", href: edit_glossary_path(glossary_1.name)) }
-      it { should have_link("削除する", href: delete_glossary_path(glossary_1.name)) }
+      it { should have_link("削除する") }
     end
     
     describe "GET /users/edit" do
