@@ -16,3 +16,7 @@
 
 /nbproject
 /nbproject/*
+
+# ignore config files
+/config/initializers/*
+
